@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 
 const Layout = () => {
   const location = useLocation();
-  const pathName = location.pathname;
   
   useEffect(() => {
     document.title = "Dan Danaher";

@@ -56,7 +56,9 @@ const Sidebar = () => {
                   )
                 }
               >
-                <item.icon className="h-6 w-6" />
+                <div className="flex justify-center items-center w-6 h-6">
+                  <item.icon className="h-6 w-6" />
+                </div>
                 {isExpanded && <span className="text-lg">{item.name}</span>}
               </NavLink>
             </li>

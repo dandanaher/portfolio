@@ -9,7 +9,7 @@ interface ScrollColumnProps {
 
 const ScrollColumn: React.FC<ScrollColumnProps> = ({ className, children }) => {
   return (
-    <div className={cn("relative flex-1 h-full", className)}>
+    <div className={cn("relative flex-none w-1/2 h-full", className)}>
       <div className="absolute inset-0 overflow-y-auto custom-scrollbar">
         <div className="p-6">
           {children}

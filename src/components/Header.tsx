@@ -13,9 +13,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full h-16 bg-white/60 backdrop-blur-lg">
       <div className="flex items-center justify-between h-full px-6">
-        <div onClick={expandSidebar} className="cursor-pointer">
-          {!isExpanded && <span className="text-lg font-bold">Dan</span>}
-        </div>
+        <div className="w-6"></div> {/* Empty spacer to maintain layout */}
         {isHomePage && (
           <>
             <div className="text-xl font-bold">Blog</div>

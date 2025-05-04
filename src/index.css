@@ -101,9 +101,10 @@
   }
 }
 
-/* Custom scrollbar styles */
+/* Custom scrollbar styles - hide visually but maintain functionality */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -111,8 +112,13 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: transparent;
   border-radius: 10px;
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Transition utilities */
