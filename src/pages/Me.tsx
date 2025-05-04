@@ -8,15 +8,15 @@ const Me = () => {
   return (
     <>
       <InfoCard />
-      <div className="flex flex-1 overflow-hidden">
-        <ScrollColumn>
+      <div className="flex-1 flex" style={{ width: 'calc(100% - 40%)', minWidth: '60%' }}>
+        <ScrollColumn className="w-1/2 flex-none">
           <BlogCard title="Example title" text="Example subheading" />
           <BlogCard />
           <BlogCard />
           <BlogCard />
           <BlogCard />
         </ScrollColumn>
-        <ScrollColumn>
+        <ScrollColumn className="w-1/2 flex-none">
           <PhotoCard />
           <PhotoCard />
           <PhotoCard />
