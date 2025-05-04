@@ -7,8 +7,12 @@ const Projects = () => {
     <>
       <InfoCard />
       <div className="flex flex-1 overflow-hidden">
-        <ScrollColumn />
-        <ScrollColumn />
+        <ScrollColumn>
+          <div className="text-gray-400">Project descriptions will be displayed here</div>
+        </ScrollColumn>
+        <ScrollColumn>
+          <div className="text-gray-400">Project images will be displayed here</div>
+        </ScrollColumn>
       </div>
     </>
   );
