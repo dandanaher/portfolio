@@ -5,7 +5,7 @@ const InfoCard = () => {
   const { isExpanded } = useSidebar();
   
   return (
-    <div className="flex-shrink-0 h-full p-6" style={{ width: isExpanded ? '30%' : '40%' }}>
+    <div className="h-full w-full px-6 py-6">
       <div className="relative bg-white h-full rounded-3xl shadow-lg p-6 overflow-hidden">
         {/* Profile picture container - top right corner */}
         <div className="absolute top-6 right-6 w-32 h-32 rounded-3xl bg-gray-100">
