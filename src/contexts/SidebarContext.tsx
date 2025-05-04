@@ -1,27 +1,17 @@
 
-import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { createContext, useState, useContext, ReactNode } from 'react';
 
 interface SidebarContextType {
   isExpanded: boolean;
   toggleSidebar: () => void;
   expandSidebar: () => void;
   collapseSidebar: () => void;
-  sidebarWidth: number;
-  infoCardWidth: string;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: ReactNode }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(64); // 16rem = 64px
-  const [infoCardWidth, setInfoCardWidth] = useState("40%");
-
-  // Update widths when sidebar state changes
-  useEffect(() => {
-    setSidebarWidth(isExpanded ? 240 : 64); // 60px when collapsed, 240px when expanded
-    setInfoCardWidth(isExpanded ? "30%" : "40%");
-  }, [isExpanded]);
 
   const toggleSidebar = () => setIsExpanded(prev => !prev);
   const expandSidebar = () => setIsExpanded(true);
@@ -32,9 +22,7 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
       isExpanded, 
       toggleSidebar, 
       expandSidebar, 
-      collapseSidebar,
-      sidebarWidth,
-      infoCardWidth
+      collapseSidebar 
     }}>
       {children}
     </SidebarContext.Provider>

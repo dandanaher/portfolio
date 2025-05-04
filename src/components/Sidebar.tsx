@@ -32,9 +32,9 @@ const Sidebar = () => {
         onClick={() => isExpanded && collapseSidebar()}
       >
         <span className="text-xl font-bold absolute left-6">Dan</span>
-        <div className="overflow-hidden absolute left-[calc(6px+3ch)]" style={{ width: isExpanded ? 'auto' : '0' }}>
-          <span className="text-xl font-bold whitespace-nowrap">aher</span>
-        </div>
+        {isExpanded && (
+          <span className="text-xl font-bold pl-[2.5rem]">aher</span>
+        )}
         {!isExpanded && (
           <span 
             className="absolute inset-0 flex items-center justify-center cursor-pointer"
@@ -51,26 +51,17 @@ const Sidebar = () => {
                 to={item.path}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center p-2 rounded-full transition-colors relative",
+                    "flex items-center gap-4 p-2 rounded-full transition-colors relative",
                     isActive ? "bg-gray-200" : "hover:bg-gray-100"
                   )
                 }
               >
-                {/* Icon container - fixed position */}
                 <div className="flex justify-center items-center w-6 h-6 z-10">
                   <item.icon className="h-6 w-6" />
                 </div>
-                
-                {/* Text label - appears/disappears with transition */}
-                <div 
-                  className="overflow-hidden transition-all duration-300" 
-                  style={{ 
-                    maxWidth: isExpanded ? '160px' : '0',
-                    opacity: isExpanded ? 1 : 0
-                  }}
-                >
-                  <span className="text-lg pl-4 whitespace-nowrap">{item.name}</span>
-                </div>
+                {isExpanded && (
+                  <span className="text-lg absolute left-12">{item.name}</span>
+                )}
               </NavLink>
             </li>
           ))}
