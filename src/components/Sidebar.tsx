@@ -49,7 +49,7 @@ const Sidebar = () => {
       <nav className="flex-1 pt-6">
         <ul className="space-y-6">
           {navItems.map((item) => (
-            <li key={item.path} className="px-4">
+            <li key={item.path} className="pl-2.5 pr-4"> {/* Adjusted padding */}
               <NavLink
                 to={item.path}
                 className={({ isActive }) =>
