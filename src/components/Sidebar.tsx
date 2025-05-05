@@ -35,9 +35,14 @@ const Sidebar = () => {
         onClick={() => isExpanded && collapseSidebar()}
       >
         <span className="text-xl font-bold absolute left-2.5 top-1/2 transform -translate-y-1/2">DAN</span>
-        {isExpanded && (
-          <span className="text-xl font-bold absolute left-[3.625rem] top-1/2 transform -translate-y-1/2">DANAHER</span>
-        )}
+        <span
+          className={cn(
+            "text-xl font-bold absolute left-[3.625rem] top-1/2 transform -translate-y-1/2 transition-opacity duration-300",
+            isExpanded ? "opacity-100" : "opacity-0"
+          )}
+        >
+          DANAHER
+        </span>
         {!isExpanded && (
           <span
             className="absolute inset-0 flex items-center justify-center cursor-pointer"
@@ -62,9 +67,14 @@ const Sidebar = () => {
                 <div className="flex justify-center items-center w-6 h-6 z-10">
                   <item.icon className="h-6 w-6" />
                 </div>
-                {isExpanded && (
-                  <span className="text-lg absolute right-4">{item.name}</span>
-                )}
+                <span
+                  className={cn(
+                    "text-lg absolute right-4 transition-opacity duration-300",
+                    isExpanded ? "opacity-100" : "opacity-0"
+                  )}
+                >
+                  {item.name}
+                </span>
               </NavLink>
             </li>
           ))}
