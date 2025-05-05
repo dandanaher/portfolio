@@ -24,19 +24,22 @@ const Sidebar = () => {
     <aside 
       className={cn(
         "h-screen bg-white border-r border-gray-200 transition-width duration-300 flex flex-col",
-        isExpanded ? "w-60" : "w-16"
+        isExpanded ? "w-52" : "w-16"
       )}
     >
       <div
-        className="h-8 border-b border-gray-200 flex items-center px-6 relative"
+        className={cn(
+          "h-8 border-b border-gray-200 flex items-center relative overflow-hidden",
+          isExpanded ? "px-6" : ""
+        )}
         onClick={() => isExpanded && collapseSidebar()}
       >
-        <span className="text-xl font-bold absolute left-6">Dan</span>
+        <span className="text-xl font-bold absolute left-2.5 top-1/2 transform -translate-y-1/2">DAN</span>
         {isExpanded && (
-          <span className="text-xl font-bold pl-[2.5rem]">aher</span>
+          <span className="text-xl font-bold absolute left-[3.625rem] top-1/2 transform -translate-y-1/2">DANAHER</span>
         )}
         {!isExpanded && (
-          <span 
+          <span
             className="absolute inset-0 flex items-center justify-center cursor-pointer"
             onClick={toggleSidebar}
           ></span>
