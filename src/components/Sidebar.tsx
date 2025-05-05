@@ -28,18 +28,18 @@ const Sidebar = () => {
       )}
     >
       <div 
-        className="h-16 border-b border-gray-200 flex items-center px-6"
+        className="h-16 border-b border-gray-200 flex items-center px-6 relative"
         onClick={() => isExpanded && collapseSidebar()}
       >
-        {isExpanded ? (
-          <h1 className="text-xl font-bold cursor-pointer">Dan Danaher</h1>
-        ) : (
+        <span className="text-xl font-bold absolute left-6">Dan</span>
+        {isExpanded && (
+          <span className="text-xl font-bold pl-[2.5rem]">aher</span>
+        )}
+        {!isExpanded && (
           <span 
-            className="text-lg font-bold w-full text-center cursor-pointer"
+            className="absolute inset-0 flex items-center justify-center cursor-pointer"
             onClick={toggleSidebar}
-          >
-            Dan
-          </span>
+          ></span>
         )}
       </div>
       
@@ -51,15 +51,17 @@ const Sidebar = () => {
                 to={item.path}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center gap-4 p-2 rounded-full transition-colors",
+                    "flex items-center gap-4 p-2 rounded-full transition-colors relative",
                     isActive ? "bg-gray-200" : "hover:bg-gray-100"
                   )
                 }
               >
-                <div className="flex justify-center items-center w-6 h-6">
+                <div className="flex justify-center items-center w-6 h-6 z-10">
                   <item.icon className="h-6 w-6" />
                 </div>
-                {isExpanded && <span className="text-lg">{item.name}</span>}
+                {isExpanded && (
+                  <span className="text-lg absolute left-12">{item.name}</span>
+                )}
               </NavLink>
             </li>
           ))}
