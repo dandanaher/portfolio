@@ -27,8 +27,8 @@ const Sidebar = () => {
         isExpanded ? "w-60" : "w-16"
       )}
     >
-      <div 
-        className="h-16 border-b border-gray-200 flex items-center px-6 relative"
+      <div
+        className="h-8 border-b border-gray-200 flex items-center px-6 relative"
         onClick={() => isExpanded && collapseSidebar()}
       >
         <span className="text-xl font-bold absolute left-6">Dan</span>
