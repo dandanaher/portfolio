@@ -24,7 +24,7 @@ const Sidebar = () => {
     <aside 
       className={cn(
         "h-screen bg-white border-r border-gray-200 transition-width duration-300 flex flex-col",
-        isExpanded ? "w-52" : "w-16"
+        isExpanded ? "w-44" : "w-16"
       )}
     >
       <div
@@ -63,7 +63,7 @@ const Sidebar = () => {
                   <item.icon className="h-6 w-6" />
                 </div>
                 {isExpanded && (
-                  <span className="text-lg absolute left-12">{item.name}</span>
+                  <span className="text-lg absolute right-4">{item.name}</span>
                 )}
               </NavLink>
             </li>
