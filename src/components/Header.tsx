@@ -1,9 +1,7 @@
 
 import { useLocation } from 'react-router-dom';
-import { useSidebar } from '../contexts/SidebarContext';
 
 const Header = () => {
-  const { isExpanded } = useSidebar();
   const location = useLocation();
   const pathName = location.pathname;
   
@@ -11,16 +9,21 @@ const Header = () => {
   const isHomePage = pathName === '/' || pathName === '/me';
   
   return (
-    <header className="sticky top-0 z-50 w-full h-8 bg-white/60 backdrop-blur-lg border-b border-gray-100/20">
-      <div className="flex items-center justify-between h-full px-6">
-        <div className="w-6"></div> {/* Empty spacer to maintain layout */}
-        {isHomePage && (
-          <div className="flex-1 grid grid-cols-2 absolute inset-x-0">
-            <div className="text-base font-semibold text-center">Blog</div>
-            <div className="text-base font-semibold text-center">Images</div>
+    <header className="sticky top-0 z-40 w-full h-8 bg-white/60 backdrop-blur-lg border-b border-gray-100/20">
+      <div className="flex h-full items-center">
+        <div className="w-2/5 min-w-[280px] px-6" aria-hidden />
+        {isHomePage ? (
+          <div className="flex flex-1 h-full">
+            <div className="w-1/2 px-6 flex items-center text-left text-xl font-bold uppercase">
+              Blog
+            </div>
+            <div className="w-1/2 px-6 flex items-center text-left text-xl font-bold uppercase">
+              Images
+            </div>
           </div>
+        ) : (
+          <div className="flex-1" />
         )}
-        <div className="w-6"></div> {/* Empty spacer for right side to maintain layout */}
       </div>
     </header>
   );

@@ -8,7 +8,7 @@ const Me = () => {
   return (
     <>
       <InfoCard />
-      <div className="flex-1 flex" style={{ width: 'calc(100% - 40%)', minWidth: '60%' }}>
+      <div className="flex flex-1 min-w-[60%] overflow-hidden">
         <ScrollColumn className="w-1/2 flex-none">
           <BlogCard title="Example title" text="Example subheading" />
           <BlogCard />

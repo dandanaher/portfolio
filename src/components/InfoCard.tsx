@@ -1,11 +1,7 @@
 
-import { useSidebar } from '../contexts/SidebarContext';
-
 const InfoCard = () => {
-  const { isExpanded } = useSidebar();
-  
   return (
-    <div className="flex-shrink-0 h-full p-6" style={{ width: isExpanded ? '30%' : '40%' }}>
+    <div className="flex-shrink-0 h-full p-6 w-2/5 min-w-[280px]">
       <div className="relative bg-white h-full rounded-3xl shadow-lg p-6 overflow-hidden">
         {/* Profile picture container - top right corner */}
         <div className="absolute top-6 right-6 w-32 h-32 rounded-3xl bg-gray-100">

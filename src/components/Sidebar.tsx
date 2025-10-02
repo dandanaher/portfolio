@@ -23,7 +23,7 @@ const Sidebar = () => {
   return (
     <aside 
       className={cn(
-        "h-screen bg-white border-r border-gray-200 transition-width duration-300 flex flex-col",
+        "fixed inset-y-0 left-0 z-50 bg-white border-r border-gray-200 transition-[width] duration-300 flex flex-col",
         isExpanded ? "w-44" : "w-16"
       )}
     >
