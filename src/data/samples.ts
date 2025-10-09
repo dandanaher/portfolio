@@ -6,20 +6,11 @@ export type BlogEntry = {
 
 export const blogEntries: BlogEntry[] = [
   {
-    title: "Design systems, simplified",
-    text: "Capturing a flexible pattern language for rapid portfolio experiments.",
-    meta: "Updated this week",
+    title: "Hello World",
+    text: "First post on this site. Not sure what to write yet but more to come :)",
+    meta: "10/10/2025",
   },
-  {
-    title: "Measuring community impact",
-    text: "Packaging volunteer analytics into easy-to-share snapshots.",
-    meta: "Updated this month",
-  },
-  {
-    title: "Creative tooling in Bun + Vite",
-    text: "Lean build pipelines for playground prototypes and design audits.",
-    meta: "Updated this summer",
-  },
+
 ];
 
 export type PhotoEntry = {
@@ -43,8 +34,8 @@ export type ProjectEntry = {
 
 export const projectEntries: ProjectEntry[] = [
   {
-    title: "Lumon Macrodata Refinement",
-    description: "A volunteer management and analytics platform showcasing community impact metrics and engagement tracking.",
+    title: "Macrodata Refinement",
+    description: "If you liked Severance, you'll enjoy this little MDR simulator I built for fun. Best enjoyed in fullscreen, on desktop.",
     stack: ["React", "TypeScript", "GitHub Pages"],
     link: "https://lumon-volunteering.github.io/macrodatarefinement/",
     meta: "Live Project",
