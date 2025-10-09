@@ -25,7 +25,7 @@ Clean TypeScript + React single-page layout for showcasing bio, projects, and co
 - Tailwind CSS for styling with a trimmed config.
 - TypeScript and Vite for tooling and bundling.
 
-## Getting started
+## Getting started :
 
 ```bash
 npm install
