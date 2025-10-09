@@ -7,14 +7,14 @@ const Projects = () => {
     <div className="flex flex-1 overflow-hidden">
       <ScrollColumn>
         {projectNotes.descriptions.map((description) => (
-          <p key={description} className="mb-4 text-gray-600">
+          <p key={description} className="mb-4 text-[#3c3d3b]">
             {description}
           </p>
         ))}
       </ScrollColumn>
       <ScrollColumn>
         {projectNotes.visuals.map((visual) => (
-          <p key={visual} className="mb-4 text-gray-600">
+          <p key={visual} className="mb-4 text-[#3c3d3b]">
             {visual}
           </p>
         ))}

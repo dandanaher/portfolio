@@ -78,9 +78,9 @@ const Sidebar = () => {
                 to={item.path}
                 className={({ isActive }) =>
                   cn(
-                    "group relative flex items-center gap-4 rounded-full p-2 text-slate-500 transition-colors duration-200 ease-out",
-                    "hover:text-slate-900",
-                    isActive ? "active text-slate-900" : ""
+                    "group relative flex items-center gap-4 rounded-full p-2 text-[#626360] transition-colors duration-200 ease-out",
+                    "hover:text-[#3c3d3b]",
+                    isActive ? "active text-[#2a2b29]" : ""
                   )
                 }
               >
@@ -89,9 +89,9 @@ const Sidebar = () => {
                 </span>
                 <span
                   className={cn(
-                    "absolute right-4 w-24 text-right text-lg font-serif lowercase text-slate-600 transition-all duration-300",
+                    "absolute right-4 w-24 text-right text-lg font-serif lowercase text-[#626360] transition-all duration-300",
                     isExpanded ? "opacity-100" : "opacity-0",
-                    "group-[.active]:text-slate-900"
+                    "group-[.active]:text-[#2a2b29]"
                   )}
                 >
                   {item.name}

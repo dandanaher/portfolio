@@ -12,8 +12,8 @@ const BlogCard = ({
 }: BlogCardProps) => (
   <div className="mb-6 rounded-3xl bg-white p-6 shadow-md">
     <h3 className="mb-2 text-xl font-semibold">{title}</h3>
-    <p className="text-gray-600">{text}</p>
-    <p className="mt-4 text-sm text-gray-400">{meta}</p>
+    <p className="text-[#3c3d3b]">{text}</p>
+    <p className="mt-4 text-sm text-[#3c3d3b]">{meta}</p>
   </div>
 );
 

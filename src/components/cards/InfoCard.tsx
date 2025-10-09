@@ -25,7 +25,7 @@ const InfoCard = () => {
             </div>
           </div>
         </div>
-        <p className="mt-8 w-full text-left text-4xl font-serif font-semibold text-gray-800">
+        <p className="mt-8 w-full text-left text-4xl font-serif text-[#3c3d3b]">
           Dan Danaher
         </p>
       </div>
