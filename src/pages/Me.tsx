@@ -1,26 +1,24 @@
 
-import InfoCard from '../components/InfoCard';
-import ScrollColumn from '../components/ScrollColumn';
-import BlogCard from '../components/BlogCard';
-import PhotoCard from '../components/PhotoCard';
+import InfoCard from "@/components/cards/InfoCard";
+import BlogCard from "@/components/cards/BlogCard";
+import PhotoCard from "@/components/cards/PhotoCard";
+import ScrollColumn from "@/components/shared/ScrollColumn";
+import { blogEntries, photoEntries } from "@/data/samples";
 
 const Me = () => {
   return (
     <>
       <InfoCard />
-      <div className="flex flex-1 min-w-[60%] overflow-hidden">
+      <div className="flex min-w-[60%] flex-1 overflow-hidden">
         <ScrollColumn className="w-1/2 flex-none">
-          <BlogCard title="Example title" text="Example subheading" />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
-          <BlogCard />
+          {blogEntries.map((entry) => (
+            <BlogCard key={entry.title} {...entry} />
+          ))}
         </ScrollColumn>
         <ScrollColumn className="w-1/2 flex-none">
-          <PhotoCard />
-          <PhotoCard />
-          <PhotoCard />
-          <PhotoCard />
+          {photoEntries.map((photo) => (
+            <PhotoCard key={photo.caption} {...photo} />
+          ))}
         </ScrollColumn>
       </div>
     </>

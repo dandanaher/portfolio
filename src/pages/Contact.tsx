@@ -1,6 +1,7 @@
 
-import InfoCard from '../components/InfoCard';
-import ScrollColumn from '../components/ScrollColumn';
+import InfoCard from "@/components/cards/InfoCard";
+import ScrollColumn from "@/components/shared/ScrollColumn";
+import { contactNotes } from "@/data/samples";
 
 const Contact = () => {
   return (
@@ -8,10 +9,18 @@ const Contact = () => {
       <InfoCard />
       <div className="flex flex-1 overflow-hidden">
         <ScrollColumn>
-          <div className="text-gray-400">Contact information will be displayed here</div>
+          {contactNotes.details.map((detail) => (
+            <p key={detail} className="mb-4 text-gray-600">
+              {detail}
+            </p>
+          ))}
         </ScrollColumn>
         <ScrollColumn>
-          <div className="text-gray-400">Contact form will be displayed here</div>
+          {contactNotes.followUp.map((note) => (
+            <p key={note} className="mb-4 text-gray-600">
+              {note}
+            </p>
+          ))}
         </ScrollColumn>
       </div>
     </>

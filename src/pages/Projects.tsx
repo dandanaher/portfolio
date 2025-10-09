@@ -1,6 +1,7 @@
 
-import InfoCard from '../components/InfoCard';
-import ScrollColumn from '../components/ScrollColumn';
+import InfoCard from "@/components/cards/InfoCard";
+import ScrollColumn from "@/components/shared/ScrollColumn";
+import { projectNotes } from "@/data/samples";
 
 const Projects = () => {
   return (
@@ -8,10 +9,18 @@ const Projects = () => {
       <InfoCard />
       <div className="flex flex-1 overflow-hidden">
         <ScrollColumn>
-          <div className="text-gray-400">Project descriptions will be displayed here</div>
+          {projectNotes.descriptions.map((description) => (
+            <p key={description} className="mb-4 text-gray-600">
+              {description}
+            </p>
+          ))}
         </ScrollColumn>
         <ScrollColumn>
-          <div className="text-gray-400">Project images will be displayed here</div>
+          {projectNotes.visuals.map((visual) => (
+            <p key={visual} className="mb-4 text-gray-600">
+              {visual}
+            </p>
+          ))}
         </ScrollColumn>
       </div>
     </>
