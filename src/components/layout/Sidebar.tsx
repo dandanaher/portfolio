@@ -75,7 +75,7 @@ const Sidebar = () => {
                 </span>
                 <span
                   className={cn(
-                    "absolute right-4 text-lg capitalize transition-opacity duration-300",
+                    "absolute right-4 text-lg font-serif lowercase transition-opacity duration-300",
                     isExpanded ? "opacity-100" : "opacity-0"
                   )}
                 >

@@ -1,29 +1,25 @@
 
-import InfoCard from "@/components/cards/InfoCard";
 import ScrollColumn from "@/components/shared/ScrollColumn";
 import { contactNotes } from "@/data/samples";
 
 const Contact = () => {
   return (
-    <>
-      <InfoCard />
-      <div className="flex flex-1 overflow-hidden">
-        <ScrollColumn>
-          {contactNotes.details.map((detail) => (
-            <p key={detail} className="mb-4 text-gray-600">
-              {detail}
-            </p>
-          ))}
-        </ScrollColumn>
-        <ScrollColumn>
-          {contactNotes.followUp.map((note) => (
-            <p key={note} className="mb-4 text-gray-600">
-              {note}
-            </p>
-          ))}
-        </ScrollColumn>
-      </div>
-    </>
+    <div className="flex flex-1 overflow-hidden">
+      <ScrollColumn>
+        {contactNotes.details.map((detail) => (
+          <p key={detail} className="mb-4 text-gray-600">
+            {detail}
+          </p>
+        ))}
+      </ScrollColumn>
+      <ScrollColumn>
+        {contactNotes.followUp.map((note) => (
+          <p key={note} className="mb-4 text-gray-600">
+            {note}
+          </p>
+        ))}
+      </ScrollColumn>
+    </div>
   );
 };
 
