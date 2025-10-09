@@ -1,4 +1,4 @@
-import type { ElementType } from "react";
+import type { ElementType, FocusEvent } from "react";
 import { NavLink } from "react-router-dom";
 import { GraduationCap, Mail, Settings, User } from "lucide-react";
 
@@ -19,21 +19,43 @@ const navItems: NavItem[] = [
 ];
 
 const Sidebar = () => {
-  const { isExpanded, toggleSidebar, collapseSidebar } = useSidebar();
+  const { isExpanded, expandSidebar, collapseSidebar } = useSidebar();
+
+  const handleMouseEnter = () => {
+    expandSidebar();
+  };
+
+  const handleMouseLeave = () => {
+    collapseSidebar();
+  };
+
+  const handleFocus = () => {
+    expandSidebar();
+  };
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    const relatedTarget = event.relatedTarget;
+    if (!(relatedTarget instanceof Node) || !event.currentTarget.contains(relatedTarget)) {
+      collapseSidebar();
+    }
+  };
 
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-50 flex h-full flex-col border-r border-gray-200 bg-white transition-[width] duration-300",
+        "fixed inset-y-0 left-0 z-50 flex h-full flex-col border-r border-white/10 bg-white/12 shadow-lg shadow-slate-900/5 backdrop-blur-md transition-[width] duration-300 supports-[backdrop-filter]:bg-white/8",
         isExpanded ? "w-44" : "w-16"
       )}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocusCapture={handleFocus}
+      onBlurCapture={handleBlur}
     >
       <div
         className={cn(
-          "relative flex h-8 items-center overflow-hidden border-b border-gray-200",
+          "relative flex h-8 items-center overflow-hidden border-b border-white/10 bg-white/10",
           isExpanded ? "px-6" : ""
         )}
-        onClick={() => isExpanded && collapseSidebar()}
       >
         <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xl font-bold">
           DAN
@@ -46,15 +68,6 @@ const Sidebar = () => {
         >
           DANAHER
         </span>
-        {!isExpanded && (
-          <button
-            type="button"
-            className="absolute inset-0 flex cursor-pointer items-center justify-center"
-            onClick={toggleSidebar}
-          >
-            <span className="sr-only">Expand navigation</span>
-          </button>
-        )}
       </div>
 
       <nav className="flex-1 pt-6">
@@ -65,8 +78,9 @@ const Sidebar = () => {
                 to={item.path}
                 className={({ isActive }) =>
                   cn(
-                    "relative flex items-center gap-4 rounded-full p-2 transition-colors",
-                    isActive ? "bg-gray-200" : "hover:bg-gray-100"
+                    "group relative flex items-center gap-4 rounded-full p-2 text-slate-500 transition-colors duration-200 ease-out",
+                    "hover:text-slate-900",
+                    isActive ? "active text-slate-900" : ""
                   )
                 }
               >
@@ -75,8 +89,9 @@ const Sidebar = () => {
                 </span>
                 <span
                   className={cn(
-                    "absolute right-4 text-lg font-serif lowercase transition-opacity duration-300",
-                    isExpanded ? "opacity-100" : "opacity-0"
+                    "absolute right-4 w-24 text-right text-lg font-serif lowercase text-slate-600 transition-all duration-300",
+                    isExpanded ? "opacity-100" : "opacity-0",
+                    "group-[.active]:text-slate-900"
                   )}
                 >
                   {item.name}
