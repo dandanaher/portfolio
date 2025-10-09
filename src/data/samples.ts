@@ -4,6 +4,10 @@ export type BlogEntry = {
   meta: string;
 };
 
+export const profileDetails = {
+  summary: "aerospace engineering student. 21 years old, based in London. ",
+};
+
 export const blogEntries: BlogEntry[] = [
   {
     title: "Hello World",

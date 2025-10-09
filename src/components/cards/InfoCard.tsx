@@ -1,9 +1,12 @@
 import faviconUrl from "@/assets/branding/favicon.png";
+import { profileDetails } from "@/data/samples";
 
 const placeholderImage =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' rx='48' fill='%23d4d4d8'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='36' font-family='serif' fill='%236b7280'>Coming Soon</text></svg>";
 
 const InfoCard = () => {
+  const { summary } = profileDetails;
+
   return (
     <div className="min-w-[280px] w-2/5 flex-shrink-0 p-6">
       <div className="flex h-full flex-col items-center justify-start gap-4 pt-20">
@@ -27,6 +30,9 @@ const InfoCard = () => {
         </div>
         <p className="mt-8 w-full text-left text-4xl font-serif text-[#3c3d3b]">
           Dan Danaher
+        </p>
+        <p className="w-full text-left text-base font-serif text-[#3c3d3b]">
+          {summary}
         </p>
       </div>
     </div>
