@@ -37,11 +37,9 @@ jobs:
       - name: Build (Vite)
         run: npm run build
 
-      # Ensure your custom domain is bound to the deployed artifact
       - name: Add CNAME
         run: echo dandanaher.com > "$OUT_DIR/CNAME"
 
-      # SPA deep-link fallback (safe to keep even if not an SPA)
       - name: Add 404 fallback
         run: |
           if [ -f "$OUT_DIR/index.html" ]; then
