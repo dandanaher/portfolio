@@ -33,6 +33,24 @@ export const photoEntries: PhotoEntry[] = [
   { caption: "Trail reflections" },
 ];
 
+export type ProjectEntry = {
+  title: string;
+  description: string;
+  stack: string[];
+  link: string;
+  meta: string;
+};
+
+export const projectEntries: ProjectEntry[] = [
+  {
+    title: "Lumon Macrodata Refinement",
+    description: "A volunteer management and analytics platform showcasing community impact metrics and engagement tracking.",
+    stack: ["React", "TypeScript", "GitHub Pages"],
+    link: "https://lumon-volunteering.github.io/macrodatarefinement/",
+    meta: "Live Project",
+  },
+];
+
 export const projectNotes = {
   descriptions: [
     "Project roadmaps and briefs will collect here shortly.",
