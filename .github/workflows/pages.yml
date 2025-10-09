@@ -40,6 +40,14 @@ jobs:
       - name: Add CNAME
         run: echo dandanaher.com > "$OUT_DIR/CNAME"
 
+      - name: Verify artifact contents
+        run: |
+            echo "Listing $OUT_DIR"
+            ls -la "$OUT_DIR"
+            echo "CNAME contents:"
+            cat "$OUT_DIR/CNAME"
+
+
       - name: Add 404 fallback
         run: |
           if [ -f "$OUT_DIR/index.html" ]; then
