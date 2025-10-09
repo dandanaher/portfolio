@@ -1,9 +1,6 @@
-# .github/workflows/pages.yml
 name: Deploy to GitHub Pages
-
 on:
-  push:
-    branches: [ main ]
+  push: { branches: [ main ] }
   workflow_dispatch:
 
 permissions:
@@ -16,46 +13,27 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  OUT_DIR: dist   # change if your Vite build outputs elsewhere
+  OUT_DIR: dist   # change if your Vite outDir differs
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Build (Vite)
-        run: npm run build
-
+      - run: npm ci
+      - run: npm run build
       - name: Add CNAME
         run: echo dandanaher.com > "$OUT_DIR/CNAME"
-
-      - name: Verify artifact contents
-        run: |
-            echo "Listing $OUT_DIR"
-            ls -la "$OUT_DIR"
-            echo "CNAME contents:"
-            cat "$OUT_DIR/CNAME"
-
-
-      - name: Add 404 fallback
+      - name: SPA 404 fallback
         run: |
           if [ -f "$OUT_DIR/index.html" ]; then
             cp "$OUT_DIR/index.html" "$OUT_DIR/404.html"
           fi
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ env.OUT_DIR }}
 
