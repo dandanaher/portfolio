@@ -6,7 +6,7 @@ const Header = () => {
   const isHomePage = pathname === "/" || pathname === "/me";
 
   return (
-    <header className="sticky top-0 z-40 h-8 w-full border-b border-gray-100/20 bg-white/60 backdrop-blur-lg">
+    <header className="sticky top-0 z-40 h-8 w-full border-b border-gray-100/20 bg-white/60 font-sans backdrop-blur-lg">
       <div className="flex h-full items-center">
         <div className="w-2/5 min-w-[280px] px-6" aria-hidden />
         {isHomePage ? (
