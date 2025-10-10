@@ -1,14 +1,17 @@
+import type { ReactNode } from "react";
+
 import faviconUrl from "@/assets/branding/favicon.png";
 import profileFaceUrl from "@/assets/images/Face.png";
 import { profileDetails } from "@/data/samples";
+import { Github, Mail } from "lucide-react";
 
 const InfoCard = () => {
   const { summary } = profileDetails;
 
   return (
     <div className="min-w-[280px] w-2/5 flex-shrink-0 p-6">
-      <div className="flex h-full flex-col items-center justify-start gap-4 pt-20">
-        <div className="group relative h-72 w-72 [perspective:1600px]">
+      <div className="flex h-full flex-col items-start justify-start gap-6 pt-20">
+        <div className="group relative h-72 w-72 self-center [perspective:1600px]">
           <div className="relative h-full w-full rounded-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
             <div className="absolute inset-0 overflow-hidden rounded-full bg-gray-100 shadow-xl [backface-visibility:hidden]">
               <img
@@ -26,15 +29,58 @@ const InfoCard = () => {
             </div>
           </div>
         </div>
-        <p className="mt-8 w-full text-left text-4xl font-serif text-[#3c3d3b]">
+        <p className="w-full text-left text-4xl font-serif text-[#3c3d3b]">
           Dan Danaher
         </p>
         <p className="w-full text-left text-base font-serif text-[#3c3d3b]">
           {summary}
         </p>
+        <div className="mt-4 flex items-center gap-3">
+          <IconLink
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=dandanaher.dev%40gmail.com"
+            label="Email Dan"
+          >
+            <Mail className="h-5 w-5" />
+          </IconLink>
+          <IconLink href="https://x.com/devDanaher" label="Dan on X">
+            <XGlyph className="text-[20px]" />
+          </IconLink>
+          <IconLink href="https://github.com/dandanaher" label="Dan on GitHub">
+            <Github className="h-5 w-5" />
+          </IconLink>
+        </div>
       </div>
     </div>
   );
 };
+
+const IconLink = ({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: ReactNode;
+}) => (
+  <a
+    href={href}
+    aria-label={label}
+    target={href.startsWith("http") ? "_blank" : undefined}
+    rel={href.startsWith("http") ? "noreferrer" : undefined}
+    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/20 text-[#3c3d3b] shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:border-[#3c3d3b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3c3d3b]"
+  >
+    {children}
+  </a>
+);
+
+const XGlyph = ({ className }: { className?: string }) => (
+  <span
+    className={["font-black leading-none", className].filter(Boolean).join(" ")}
+    aria-hidden
+  >
+    𝕏
+  </span>
+);
 
 export default InfoCard;

@@ -1,6 +1,6 @@
 import type { ElementType, FocusEvent } from "react";
 import { NavLink } from "react-router-dom";
-import { Mail, Settings, User } from "lucide-react";
+import { BookMarked, Settings, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/hooks/use-sidebar";
@@ -13,8 +13,8 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { path: "/me", name: "me", icon: User },
+  { path: "/library", name: "library", icon: BookMarked },
   { path: "/projects", name: "projects", icon: Settings },
-  { path: "/contact", name: "contact", icon: Mail },
 ];
 
 const Sidebar = () => {
