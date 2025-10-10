@@ -69,12 +69,6 @@ export const academicNotes = {
 };
 
 export const contactNotes = {
-  details: [
-    "Direct email, social handles, and quick-call links land in this column.",
-    "Availability windows refresh weekly to stay accurate.",
-  ],
-  followUp: [
-    "Drop a short brief or use the embedded form soon.",
-    "Calendly slots and backlog updates will rotate in here.",
-  ],
+  details: [],
+  followUp: [],
 };
