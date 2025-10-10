@@ -57,12 +57,12 @@ const Sidebar = () => {
           isExpanded ? "px-6" : ""
         )}
       >
-        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xl font-bold">
+        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xl font-bold font-sans">
           DAN
         </span>
         <span
           className={cn(
-            "absolute left-[3.625rem] top-1/2 -translate-y-1/2 text-xl font-bold transition-opacity duration-300",
+            "absolute left-[3.625rem] top-1/2 -translate-y-1/2 text-xl font-bold font-sans transition-opacity duration-300",
             isExpanded ? "opacity-100" : "opacity-0"
           )}
         >
