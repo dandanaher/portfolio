@@ -1,8 +1,6 @@
 import faviconUrl from "@/assets/branding/favicon.png";
+import profileFaceUrl from "@/assets/images/Face.png";
 import { profileDetails } from "@/data/samples";
-
-const placeholderImage =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' rx='48' fill='%23d4d4d8'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='36' font-family='serif' fill='%236b7280'>Coming Soon</text></svg>";
 
 const InfoCard = () => {
   const { summary } = profileDetails;
@@ -21,8 +19,8 @@ const InfoCard = () => {
             </div>
             <div className="absolute inset-0 overflow-hidden rounded-full bg-gray-200 shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)]">
               <img
-                src={placeholderImage}
-                alt="Placeholder profile variation"
+                src={profileFaceUrl}
+                alt="Dan Danaher alternate portrait"
                 className="h-full w-full object-cover"
               />
             </div>
