@@ -1,6 +1,6 @@
 import type { ElementType, FocusEvent } from "react";
 import { NavLink } from "react-router-dom";
-import { GraduationCap, Mail, Settings, User } from "lucide-react";
+import { Mail, Settings, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/hooks/use-sidebar";
@@ -13,7 +13,6 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { path: "/me", name: "me", icon: User },
-  { path: "/academics", name: "academics", icon: GraduationCap },
   { path: "/projects", name: "projects", icon: Settings },
   { path: "/contact", name: "contact", icon: Mail },
 ];
