@@ -27,8 +27,8 @@ const Contact = () => {
   return (
     <div className="flex flex-1 items-center justify-center p-6">
       <div className="flex h-[360px] w-[360px] flex-col items-center justify-between rounded-3xl border border-white/20 bg-white/60 p-8 text-[#2a2b29] shadow-lg shadow-slate-900/5 backdrop-blur">
-        <h2 className="text-center text-xl font-semibold uppercase tracking-[0.28em]">
-          Connect
+        <h2 className="text-center text-xl font-semibold">
+          Contact
         </h2>
         <div className="w-full space-y-3">
           <button

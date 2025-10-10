@@ -1,3 +1,5 @@
+import mdrScreenshot from "@/assets/images/MDR_Screenshot.png";
+
 export type BlogEntry = {
   title: string;
   text: string;
@@ -34,28 +36,22 @@ export type ProjectEntry = {
   stack: string[];
   link: string;
   meta: string;
+  longDescription: string;
+  previewImage: string;
 };
 
 export const projectEntries: ProjectEntry[] = [
   {
     title: "Macrodata Refinement",
     description: "If you liked Severance, you'll enjoy this little MDR simulator I built for fun. Best enjoyed in fullscreen, on desktop.",
-    stack: ["React", "TypeScript", "GitHub Pages"],
+    stack: ["HTML", "CSS", "GitHub Pages"],
     link: "https://lumon-volunteering.github.io/macrodatarefinement/",
     meta: "Live Project",
+    longDescription:
+      "An interactive recreation of Lumon's Macrodata Refinement terminal, focused on mood, atmosphere, and minimalistic gameplay loops inspired by the show. Built as a web experiment to explore nostalgia-rich interfaces and motion design. All hand-crafted animations using SVGs (and a few hand-drawn images in Procreate). Saves locally to the browser so you can make progress like a real refiner!",
+    previewImage: mdrScreenshot,
   },
 ];
-
-export const projectNotes = {
-  descriptions: [
-    "Project roadmaps and briefs will collect here shortly.",
-    "Each card will outline intent, stack, and live links.",
-  ],
-  visuals: [
-    "Snapshot galleries and prototypes will land on this side.",
-    "Drop newest experiments here with quick captions.",
-  ],
-};
 
 export const academicNotes = {
   highlights: [
