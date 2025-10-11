@@ -159,6 +159,11 @@ type BookArtProps = {
 
 const BookArt = ({ book }: BookArtProps) => {
   const hasCover = Boolean(book.coverImage);
+  const scale = book.coverScale ?? 1;
+  const imageStyle =
+    scale !== 1
+      ? { transform: `scale(${scale})`, transformOrigin: "center" }
+      : undefined;
 
   const fallbackStyle: CSSProperties = {
     background: `linear-gradient(135deg, ${book.coverColor}, ${lightenHex(book.coverColor, 30)})`,
@@ -171,6 +176,7 @@ const BookArt = ({ book }: BookArtProps) => {
           src={book.coverImage}
           alt={`${book.title} cover`}
           className="h-full w-full object-cover"
+          style={imageStyle}
         />
       ) : (
         <div
@@ -220,6 +226,11 @@ const HeroBook = ({ book }: HeroBookProps) => {
   }, []);
 
   const hasCover = Boolean(book.coverImage);
+  const imageScale = book.coverScale ?? 1;
+  const coverImageStyle =
+    imageScale !== 1
+      ? { transform: `scale(${imageScale})`, transformOrigin: "center" }
+      : undefined;
   const fallbackStyle: CSSProperties = {
     background: `linear-gradient(135deg, ${book.coverColor}, ${lightenHex(book.coverColor, 30)})`,
   };
@@ -262,6 +273,7 @@ const HeroBook = ({ book }: HeroBookProps) => {
                 src={book.coverImage}
                 alt={`${book.title} cover`}
                 className="h-full w-full object-cover"
+                style={coverImageStyle}
               />
             ) : (
               <div

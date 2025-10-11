@@ -2,4 +2,31 @@ Current read:
 - Foundation - Isaac Asimov
 
 Previously read: 
-- 
+- Red Mars — Kim Stanley Robinson
+- Green Mars — Kim Stanley Robinson
+- Blue Mars — Kim Stanley Robinson
+- Limitless — Tim Peake
+- The Three-Body Problem — Cixin Liu
+- The Dark Forest — Cixin Liu
+- Ultima — Stephen Baxter
+- Proxima — Stephen Baxter
+- Caliban’s War — James S.A. Corey
+- Leviathan Wakes — James S.A. Corey
+- Dune — Frank Herbert
+- Dune Messiah — Frank Herbert
+- Children of Dune — Frank Herbert
+- The Iliad — Homer
+- The Odyssey — Homer
+- Liftoff — Eric Berger
+- The Hitchhiker’s Guide to the Galaxy — Douglas Adams
+- The Restaurant at the End of the Universe — Douglas Adams
+- Life, the Universe and Everything — Douglas Adams
+-  Brave New World — Aldous Huxley
+- 1984 — George Orwell
+- The Book of Strange New Things — Michel Faber
+- Dead Astronauts — Jeff VanderMeer
+- Rendezvous with Rama — Arthur C. Clarke
+- The City and the Stars — Arthur C. Clarke
+- The Decline and Fall of the Roman Empire — Edward Gibbon
+- Berserk: Deluxe Edition Vol. 1 — Kentaro Miura
+- Berserk: Deluxe Edition Vol. 2 — Kentaro Miura
