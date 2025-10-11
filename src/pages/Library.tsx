@@ -101,15 +101,6 @@ const Library = () => {
                 <span className="whitespace-nowrap text-xs uppercase tracking-[0.45em] text-[#8A8984]">
                   Previously Read
                 </span>
-                {currentBook && selectedBook?.id !== currentBook.id ? (
-                  <button
-                    type="button"
-                    onClick={() => setSelectedBookId(currentBook.id)}
-                    className="text-[10px] uppercase tracking-[0.3em] text-[#8A8984] underline-offset-4 transition hover:text-[#3C3C3A] hover:underline"
-                  >
-                    Back to current
-                  </button>
-                ) : null}
               </div>
               <div className="relative">
                 <div className="custom-scrollbar max-h-[52vh] overflow-y-auto pr-2 pb-12">
