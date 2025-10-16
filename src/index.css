@@ -11,11 +11,22 @@
   color: #3c3d3b;
 }
 
+:root.dark {
+  background-color: #262624;
+  color: #faf8f4;
+}
+
 body {
   margin: 0;
   background-color: #faf8f4;
   color: #3c3d3b;
   font-family: "Georgia", "Times New Roman", serif;
+}
+
+body.dark,
+.dark body {
+  background-color: #262624;
+  color: #faf8f4;
 }
 
 #root {

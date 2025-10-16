@@ -78,7 +78,7 @@ const Layout = () => {
   
   return (
     <SidebarProvider>
-      <div className="relative h-screen w-full overflow-hidden bg-[#FAF8F4]">
+      <div className="relative h-screen w-full overflow-hidden bg-[#FAF8F4] dark:bg-[#262624]">
         <Sidebar />
         <div className="h-full flex flex-col pl-16">
           <Header />

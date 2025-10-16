@@ -31,8 +31,8 @@ const InfoCard = () => {
         </div>
 
         <div className="flex w-full max-w-2xl flex-col items-center gap-6 text-center md:items-start md:text-left">
-          <p className="text-4xl font-serif text-[#3c3d3b]">Dan Danaher</p>
-          <p className="text-base font-serif text-[#3c3d3b]">{summary}</p>
+          <p className="text-4xl font-serif text-light-text dark:text-dark-text">Dan Danaher</p>
+          <p className="text-base font-serif text-light-text dark:text-dark-text">{summary}</p>
           <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
             <IconLink
               href="https://mail.google.com/mail/?view=cm&fs=1&to=dandanaher.dev%40gmail.com"
@@ -67,7 +67,7 @@ const IconLink = ({
     aria-label={label}
     target={href.startsWith("http") ? "_blank" : undefined}
     rel={href.startsWith("http") ? "noreferrer" : undefined}
-    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/20 text-[#3c3d3b] shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:border-[#3c3d3b] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3c3d3b]"
+    className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 bg-white/20 text-light-text shadow-lg shadow-slate-900/10 backdrop-blur transition hover:-translate-y-0.5 hover:border-light-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-light-text dark:border-gray-800/25 dark:bg-gray-800/20 dark:text-dark-text dark:hover:border-dark-text dark:focus-visible:outline-dark-text"
   >
     {children}
   </a>

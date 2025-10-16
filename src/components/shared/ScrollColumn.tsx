@@ -36,11 +36,11 @@ const ScrollColumn = ({ className, children }: ScrollColumnProps) => {
       </div>
       <div
         className={cn(
-          "pointer-events-none absolute left-0 right-0 top-0 h-24 bg-gradient-to-b from-neutral-100 to-transparent transition-opacity duration-200",
+          "pointer-events-none absolute left-0 right-0 top-0 h-24 bg-gradient-to-b from-light-bg to-transparent transition-opacity duration-200 dark:from-dark-bg",
           isScrolled ? "opacity-100" : "opacity-0"
         )}
       />
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-neutral-100 to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-light-bg to-transparent dark:from-dark-bg" />
     </div>
   );
 };

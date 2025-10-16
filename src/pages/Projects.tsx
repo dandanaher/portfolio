@@ -39,15 +39,15 @@ const Projects = () => {
   };
 
   return (
-    <div className="flex h-full flex-1 overflow-hidden bg-[#FAF8F4]">
+    <div className="flex h-full flex-1 overflow-hidden bg-[#FAF8F4] dark:bg-[#262624]">
       {/* Left Panel - Project Navigation */}
-      <div className="flex w-[45%] flex-col border-r border-[#8A8984]/10">
+      <div className="flex w-[45%] flex-col border-r border-[#8A8984]/10 dark:border-[#4a4a48]/50">
         {/* Header */}
-        <div className="border-b border-[#8A8984]/10 px-8 py-10">
-          <h1 className="mb-1 font-serif text-5xl tracking-tight text-[#2a2b29]">
+        <div className="border-b border-[#8A8984]/10 px-8 py-10 dark:border-[#4a4a48]/50">
+          <h1 className="mb-1 font-serif text-5xl tracking-tight text-[#2a2b29] dark:text-[#FAF8F4]">
             Projects
           </h1>
-          <p className="font-serif text-sm text-[#8A8984]">
+          <p className="font-serif text-sm text-[#8A8984] dark:text-[#9a9a98]">
             {projectEntries.length} {projectEntries.length === 1 ? 'piece' : 'pieces'} of work
           </p>
         </div>
@@ -79,32 +79,32 @@ const Projects = () => {
             <div className="mb-6 flex-none">
               <div className="mb-6 flex items-start justify-between gap-6">
                 <div className="flex-1">
-                  <h2 className="mb-3 font-serif text-5xl leading-[1.1] tracking-tight text-[#2a2b29]">
+                  <h2 className="mb-3 font-serif text-5xl leading-[1.1] tracking-tight text-[#2a2b29] dark:text-[#FAF8F4]">
                     {selectedProject.title}
                   </h2>
-                  <p className="max-w-2xl text-lg leading-relaxed text-[#4F4F4C]">
+                  <p className="max-w-2xl text-lg leading-relaxed text-[#4F4F4C] dark:text-[#c5c5c0]">
                     {selectedProject.longDescription}
                   </p>
                 </div>
               </div>
 
               {/* Meta Bar with CTA */}
-              <div className="flex items-center justify-between gap-6 border-y border-[#8A8984]/10 py-4">
+              <div className="flex items-center justify-between gap-6 border-y border-[#8A8984]/10 py-4 dark:border-[#4a4a48]/50">
                 <div className="flex items-center gap-6">
                   <div>
-                    <p className="mb-1 font-serif text-xs uppercase tracking-widest text-[#8A8984]">
+                    <p className="mb-1 font-serif text-xs uppercase tracking-widest text-[#8A8984] dark:text-[#9a9a98]">
                       Status
                     </p>
-                    <p className="text-sm font-medium text-[#2a2b29]">
+                    <p className="text-sm font-medium text-[#2a2b29] dark:text-[#FAF8F4]">
                       {selectedProject.meta}
                     </p>
                   </div>
                   {selectedProject.stack.length > 0 && (
                     <div>
-                      <p className="mb-1 font-serif text-xs uppercase tracking-widest text-[#8A8984]">
+                      <p className="mb-1 font-serif text-xs uppercase tracking-widest text-[#8A8984] dark:text-[#9a9a98]">
                         Stack
                       </p>
-                      <p className="text-sm font-medium text-[#2a2b29]">
+                      <p className="text-sm font-medium text-[#2a2b29] dark:text-[#FAF8F4]">
                         {selectedProject.stack.join(', ')}
                       </p>
                     </div>
@@ -115,7 +115,7 @@ const Projects = () => {
                     href={selectedProject.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 rounded-full bg-[#2a2b29] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#85A78D]"
+                    className="group inline-flex items-center gap-2 rounded-full bg-[#2a2b29] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[#85A78D] dark:bg-[#FAF8F4] dark:text-[#262624] dark:hover:bg-[#85A78D] dark:hover:text-white"
                   >
                     <span>View Live</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden>
@@ -128,7 +128,7 @@ const Projects = () => {
 
             {/* Image Carousel */}
             <div className="relative flex-1">
-              <div className="group relative h-full overflow-hidden rounded-lg bg-[#e8e6e1] shadow-2xl shadow-black/10">
+              <div className="group relative h-full overflow-hidden rounded-lg bg-[#e8e6e1] shadow-2xl shadow-black/10 dark:bg-[#1a1a19]">
                 {currentImage ? (
                   <div
                     className="flex h-full w-full transition-transform duration-700 ease-out"
@@ -144,7 +144,7 @@ const Projects = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center font-serif text-sm text-[#8A8984]">
+                  <div className="flex h-full w-full items-center justify-center font-serif text-sm text-[#8A8984] dark:text-[#9a9a98]">
                     No preview available
                   </div>
                 )}
@@ -153,7 +153,7 @@ const Projects = () => {
                     <button
                       type="button"
                       onClick={handlePrevious}
-                      className="absolute left-6 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-2xl text-[#2a2b29] opacity-0 shadow-lg backdrop-blur transition-all duration-300 hover:scale-110 hover:bg-white focus-visible:opacity-100 group-hover:opacity-100"
+                      className="absolute left-6 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-2xl text-[#2a2b29] opacity-0 shadow-lg backdrop-blur transition-all duration-300 hover:scale-110 hover:bg-white focus-visible:opacity-100 group-hover:opacity-100 dark:bg-[#FAF8F4]/95 dark:text-[#262624] dark:hover:bg-[#FAF8F4]"
                       aria-label="View previous screenshot"
                     >
                       ‹
@@ -161,7 +161,7 @@ const Projects = () => {
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="absolute right-6 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-2xl text-[#2a2b29] opacity-0 shadow-lg backdrop-blur transition-all duration-300 hover:scale-110 hover:bg-white focus-visible:opacity-100 group-hover:opacity-100"
+                      className="absolute right-6 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-2xl text-[#2a2b29] opacity-0 shadow-lg backdrop-blur transition-all duration-300 hover:scale-110 hover:bg-white focus-visible:opacity-100 group-hover:opacity-100 dark:bg-[#FAF8F4]/95 dark:text-[#262624] dark:hover:bg-[#FAF8F4]"
                       aria-label="View next screenshot"
                     >
                       ›
@@ -187,7 +187,7 @@ const Projects = () => {
           </div>
         ) : (
           <div className="flex h-full items-center justify-center">
-            <p className="font-serif text-sm text-[#8A8984]">
+            <p className="font-serif text-sm text-[#8A8984] dark:text-[#9a9a98]">
               Select a project to view
             </p>
           </div>

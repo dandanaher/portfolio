@@ -37,10 +37,10 @@ const Library = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-12 bg-[#FAF8F4] px-8 py-10 text-[#3C3C3A] lg:px-14 lg:py-12">
-      <header className="flex flex-col gap-3 border-b border-[#E5E1DB] pb-6">
-        <h1 className="font-serif text-5xl tracking-tight text-[#2a2b29]">Library</h1>
-        <p className="max-w-2xl text-sm leading-relaxed text-[#6B6B68]">
+    <div className="flex flex-1 flex-col gap-12 bg-[#FAF8F4] px-8 py-10 text-[#3C3C3A] lg:px-14 lg:py-12 dark:bg-[#262624] dark:text-[#FAF8F4]">
+      <header className="flex flex-col gap-3 border-b border-[#E5E1DB] pb-6 dark:border-[#4a4a48]">
+        <h1 className="font-serif text-5xl tracking-tight text-[#2a2b29] dark:text-[#FAF8F4]">Library</h1>
+        <p className="max-w-2xl text-sm leading-relaxed text-[#6B6B68] dark:text-[#9a9a98]">
           A record of some of the books I've read and am currently reading.
         </p>
       </header>
@@ -50,20 +50,20 @@ const Library = () => {
             <HeroBook book={selectedBook} />
             <div className="flex flex-1 flex-col gap-5">
               <div>
-                <h1 className="text-3xl font-serif leading-tight lg:text-[38px]">
+                <h1 className="text-3xl font-serif leading-tight lg:text-[38px] dark:text-[#FAF8F4]">
                   {selectedBook.title}
                 </h1>
-                <p className="mt-3 text-sm uppercase tracking-[0.25em] text-[#8A8984]">
+                <p className="mt-3 text-sm uppercase tracking-[0.25em] text-[#8A8984] dark:text-[#9a9a98]">
                   {selectedBook.author} · {selectedBook.year}
                 </p>
               </div>
-              <p className="max-w-3xl text-base leading-relaxed text-[#4F4F4C]">
+              <p className="max-w-3xl text-base leading-relaxed text-[#4F4F4C] dark:text-[#c5c5c0]">
                 {selectedBook.description}
               </p>
             </div>
           </div>
         ) : (
-          <p className="text-base text-[#8A8984]">
+          <p className="text-base text-[#8A8984] dark:text-[#9a9a98]">
             No books in the queue yet. Add a current read to populate this view.
           </p>
         )}
@@ -74,7 +74,7 @@ const Library = () => {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
             {currentBook ? (
               <div className="flex w-[11rem] shrink-0 flex-col items-start gap-3">
-                <span className="whitespace-nowrap text-xs uppercase tracking-[0.45em] text-[#8A8984]">
+                <span className="whitespace-nowrap text-xs uppercase tracking-[0.45em] text-[#8A8984] dark:text-[#9a9a98]">
                   Current Read
                 </span>
                 <div className="group relative w-full">
@@ -90,7 +90,7 @@ const Library = () => {
                     type="button"
                     onClick={() => handleBookSelect(currentBook.id)}
                     aria-pressed={selectedBook?.id === currentBook.id}
-                    className={`relative flex w-full shrink-0 overflow-hidden rounded-lg transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3C3C3A] aspect-[2/3] ${
+                    className={`relative flex w-full shrink-0 overflow-hidden rounded-lg transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3C3C3A] dark:focus-visible:outline-[#FAF8F4] aspect-[2/3] ${
                       selectedBook?.id === currentBook.id
                         ? "-translate-y-1"
                         : "hover:-translate-y-1"
@@ -104,7 +104,7 @@ const Library = () => {
             ) : null}
             <div className="flex flex-1 flex-col gap-4 lg:pl-4">
               <div className="flex items-center gap-3">
-                <span className="whitespace-nowrap text-xs uppercase tracking-[0.45em] text-[#8A8984]">
+                <span className="whitespace-nowrap text-xs uppercase tracking-[0.45em] text-[#8A8984] dark:text-[#9a9a98]">
                   Previously Read
                 </span>
               </div>
@@ -121,7 +121,7 @@ const Library = () => {
                               type="button"
                               onClick={() => handleBookSelect(book.id)}
                               aria-pressed={isSelected}
-                              className={`relative flex w-full shrink-0 overflow-hidden rounded-lg transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3C3C3A] aspect-[2/3] ${
+                              className={`relative flex w-full shrink-0 overflow-hidden rounded-lg transition-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3C3C3A] dark:focus-visible:outline-[#FAF8F4] aspect-[2/3] ${
                                 isSelected
                                   ? "-translate-y-1"
                                   : "hover:-translate-y-1"
@@ -135,12 +135,12 @@ const Library = () => {
                       })}
                     </div>
                   ) : (
-                    <div className="flex h-48 w-full items-center justify-center border border-dashed border-[#E5E1DB] text-xs text-[#8A8984]">
+                    <div className="flex h-48 w-full items-center justify-center border border-dashed border-[#E5E1DB] text-xs text-[#8A8984] dark:border-[#4a4a48] dark:text-[#9a9a98]">
                       Add previously read books to fill this shelf.
                     </div>
                   )}
                 </div>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#FAF8F4] to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#FAF8F4] to-transparent dark:from-[#262624]" />
               </div>
             </div>
           </div>
