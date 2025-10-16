@@ -38,6 +38,12 @@ const Library = () => {
 
   return (
     <div className="flex flex-1 flex-col gap-12 bg-[#FAF8F4] px-8 py-10 text-[#3C3C3A] lg:px-14 lg:py-12">
+      <header className="flex flex-col gap-3 border-b border-[#E5E1DB] pb-6">
+        <h1 className="font-serif text-5xl tracking-tight text-[#2a2b29]">Library</h1>
+        <p className="max-w-2xl text-sm leading-relaxed text-[#6B6B68]">
+          A record of some of the books I've read and am currently reading.
+        </p>
+      </header>
       <section className="flex flex-col gap-6">
         {selectedBook ? (
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-12">
