@@ -9,9 +9,9 @@ const InfoCard = () => {
   const { summary } = profileDetails;
 
   return (
-    <div className="min-w-[280px] w-2/5 flex-shrink-0 p-6">
-      <div className="flex h-full flex-col items-start justify-start gap-6 pt-20">
-        <div className="group relative h-72 w-72 self-center [perspective:1600px]">
+    <div className="flex w-full justify-center px-6 py-16">
+      <div className="flex w-full max-w-4xl flex-col items-center gap-10 md:flex-row md:items-center md:justify-center md:gap-16">
+        <div className="group relative h-72 w-72 flex-shrink-0 [perspective:1600px]">
           <div className="relative h-full w-full rounded-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
             <div className="absolute inset-0 overflow-hidden rounded-full bg-gray-100 shadow-xl [backface-visibility:hidden]">
               <img
@@ -29,25 +29,24 @@ const InfoCard = () => {
             </div>
           </div>
         </div>
-        <p className="w-full text-left text-4xl font-serif text-[#3c3d3b]">
-          Dan Danaher
-        </p>
-        <p className="w-full text-left text-base font-serif text-[#3c3d3b]">
-          {summary}
-        </p>
-        <div className="mt-4 flex items-center gap-3">
-          <IconLink
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=dandanaher.dev%40gmail.com"
-            label="Email Dan"
-          >
-            <Mail className="h-5 w-5" />
-          </IconLink>
-          <IconLink href="https://x.com/devDanaher" label="Dan on X">
-            <XGlyph className="text-[20px]" />
-          </IconLink>
-          <IconLink href="https://github.com/dandanaher" label="Dan on GitHub">
-            <Github className="h-5 w-5" />
-          </IconLink>
+
+        <div className="flex w-full max-w-2xl flex-col items-center gap-6 text-center md:items-start md:text-left">
+          <p className="text-4xl font-serif text-[#3c3d3b]">Dan Danaher</p>
+          <p className="text-base font-serif text-[#3c3d3b]">{summary}</p>
+          <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
+            <IconLink
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=dandanaher.dev%40gmail.com"
+              label="Email Dan"
+            >
+              <Mail className="h-5 w-5" />
+            </IconLink>
+            <IconLink href="https://x.com/devDanaher" label="Dan on X">
+              <XGlyph className="text-[20px]" />
+            </IconLink>
+            <IconLink href="https://github.com/dandanaher" label="Dan on GitHub">
+              <Github className="h-5 w-5" />
+            </IconLink>
+          </div>
         </div>
       </div>
     </div>
