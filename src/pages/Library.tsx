@@ -1,5 +1,5 @@
 import type { CSSProperties, MouseEvent } from "react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { LibraryBook } from "@/data/library";
 import { libraryBooks } from "@/data/library";
@@ -149,7 +149,12 @@ type BookArtProps = {
 };
 
 const BookArt = ({ book }: BookArtProps) => {
-  const hasCover = Boolean(book.coverImage);
+  const coverSrc = getCoverSource(book.coverImage);
+  const [isBroken, setIsBroken] = useState(false);
+  const hasCover = Boolean(coverSrc) && !isBroken;
+  useEffect(() => {
+    setIsBroken(false);
+  }, [coverSrc]);
   const scale = book.coverScale ?? 1;
   const imageStyle =
     scale !== 1
@@ -164,10 +169,12 @@ const BookArt = ({ book }: BookArtProps) => {
     <div className="relative h-full w-full overflow-hidden shadow-[0_12px_26px_-22px_rgba(60,60,58,0.55)]">
       {hasCover ? (
         <img
-          src={book.coverImage}
+          src={coverSrc}
           alt={`${book.title} cover`}
           className="h-full w-full object-cover"
           style={imageStyle}
+          loading="lazy"
+          onError={() => setIsBroken(true)}
         />
       ) : (
         <div
@@ -192,8 +199,13 @@ type HeroBookProps = {
 const HeroBook = ({ book }: HeroBookProps) => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isInteracting, setIsInteracting] = useState(false);
+  const [isCoverBroken, setIsCoverBroken] = useState(false);
+  const coverSrc = getCoverSource(book.coverImage);
+  useEffect(() => {
+    setIsCoverBroken(false);
+  }, [coverSrc]);
 
-    const handleMouseMove = useCallback(
+  const handleMouseMove = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
       const rect = event.currentTarget.getBoundingClientRect();
       const x = event.clientX - rect.left;
@@ -201,7 +213,7 @@ const HeroBook = ({ book }: HeroBookProps) => {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-        const maxTilt = 24;
+      const maxTilt = 24;
       const nextY = ((x - centerX) / centerX) * maxTilt;
       const nextX = -((y - centerY) / centerY) * maxTilt;
 
@@ -216,7 +228,7 @@ const HeroBook = ({ book }: HeroBookProps) => {
     setIsInteracting(false);
   }, []);
 
-  const hasCover = Boolean(book.coverImage);
+  const hasCover = Boolean(coverSrc) && !isCoverBroken;
   const imageScale = book.coverScale ?? 1;
   const coverImageStyle =
     imageScale !== 1
@@ -261,10 +273,11 @@ const HeroBook = ({ book }: HeroBookProps) => {
           >
             {hasCover ? (
               <img
-                src={book.coverImage}
+                src={coverSrc}
                 alt={`${book.title} cover`}
                 className="h-full w-full object-cover"
                 style={coverImageStyle}
+                onError={() => setIsCoverBroken(true)}
               />
             ) : (
               <div
@@ -338,6 +351,20 @@ const lightenHex = (hex: string, amount: number) => {
   const g = Math.min(255, ((bigint >> 8) & 255) + amount);
   const b = Math.min(255, (bigint & 255) + amount);
   return `rgb(${r}, ${g}, ${b})`;
+};
+
+const getCoverSource = (src?: string) => {
+  if (!src) {
+    return undefined;
+  }
+
+  if (!/^https?:/i.test(src)) {
+    return src;
+  }
+
+  const sanitized = src.replace(/^https?:\/\//i, "");
+  const encoded = encodeURIComponent(sanitized);
+  return `https://images.weserv.nl/?url=${encoded}&w=700&h=1050&fit=cover`;
 };
 
 export default Library;
