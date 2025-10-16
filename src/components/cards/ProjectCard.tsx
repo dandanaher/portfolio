@@ -9,6 +9,7 @@ type ProjectCardProps = {
   className?: string;
   onSelect?: () => void;
   isActive?: boolean;
+  index?: number;
 };
 
 const ProjectCard = ({
@@ -20,35 +21,19 @@ const ProjectCard = ({
   className,
   onSelect,
   isActive,
+  index = 0,
 }: ProjectCardProps) => {
   const content = (
-    <>
-      <h3 className="mb-2 text-xl font-semibold">{title}</h3>
-      <p className="mb-3 text-[#3c3d3b]">{description}</p>
-      {stack.length > 0 && (
-        <div className="mb-4 flex flex-wrap gap-2">
-          {stack.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full bg-gray-100 px-3 py-1 text-sm text-[#3c3d3b]"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      )}
-      {!onSelect && link && (
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block rounded-lg bg-[#3c3d3b] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#2a2b29]"
-        >
-          View Project →
-        </a>
-      )}
-      <p className="mt-4 text-sm text-[#3c3d3b]">{meta}</p>
-    </>
+    <div className="relative">
+      <div className="mb-2">
+        <h3 className="font-serif text-xl leading-tight tracking-tight text-[#2a2b29]">
+          {title}
+        </h3>
+      </div>
+      <p className="text-sm leading-relaxed text-[#6d6c68]">
+        {description}
+      </p>
+    </div>
   );
 
   if (onSelect) {
@@ -57,18 +42,52 @@ const ProjectCard = ({
         type="button"
         onClick={onSelect}
         className={cn(
-          "w-full rounded-3xl border border-transparent bg-white/80 p-6 text-left text-[#2a2b29] shadow-md transition duration-200 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2a2b29]",
-          isActive && "border-[#2a2b29]/50 bg-white",
+          "group relative mb-2 w-full overflow-hidden rounded-2xl border border-white/40 bg-white/75 p-6 text-left shadow-lg shadow-slate-900/10 backdrop-blur transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#85A78D]/50 hover:shadow-xl",
+          isActive && "shadow-xl",
           className
         )}
       >
-        {content}
+        {/* Green gradient overlay on hover/active - matching BlogCard */}
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 bg-gradient-to-br from-[#85A78D]/30 via-transparent to-white/80 opacity-0 transition-opacity duration-300",
+            isActive ? "opacity-100" : "group-hover:opacity-100"
+          )}
+          aria-hidden
+        />
+
+        {/* Content */}
+        <div className="relative">
+          {content}
+        </div>
+
+        {/* Active indicator dot */}
+        {isActive && (
+          <div className="absolute right-6 top-6">
+            <span className="flex h-2 w-2 items-center justify-center">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#85A78D] opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#85A78D]"></span>
+            </span>
+          </div>
+        )}
+
+        {/* Hover arrow */}
+        {!isActive && (
+          <div
+            className="absolute right-6 top-1/2 -translate-y-1/2 text-lg text-[#8A8984] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
+            style={{ transform: 'translate(8px, -50%)' }}
+          >
+            →
+          </div>
+        )}
       </button>
     );
   }
 
   return (
-    <div className={cn("rounded-3xl bg-white p-6 shadow-md", className)}>{content}</div>
+    <div className={cn("mb-2 rounded-2xl bg-white/40 p-6", className)}>
+      {content}
+    </div>
   );
 };
 
