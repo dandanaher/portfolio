@@ -4,6 +4,7 @@ const Rocket = () => {
   const [isLaunching, setIsLaunching] = useState(false);
   const [isReturning, setIsReturning] = useState(false);
   const [hasLaunched, setHasLaunched] = useState(false);
+  const [isLandingBurn, setIsLandingBurn] = useState(false);
 
   const handleLaunch = () => {
     if (hasLaunched) return;
@@ -15,23 +16,28 @@ const Rocket = () => {
       setIsReturning(true);
       setHasLaunched(true); // Set this AFTER launching to prevent second stage from showing
     }, 5000);
+    // Activate landing burn when deceleration begins (slightly before halfway)
+    setTimeout(() => {
+      setIsLandingBurn(true);
+    }, 7500); // 5s launch + 2.5s to match deceleration curve
     // End return animation
     setTimeout(() => {
       setIsReturning(false);
-    }, 9000);
+      setIsLandingBurn(false);
+    }, 11000); // 5s launch + 6s descent
   };
 
   return (
     <button
       onClick={handleLaunch}
-      className={`fixed bottom-8 right-8 z-50 transition-all ${
+      className={`fixed bottom-8 right-8 z-50 ${
         isLaunching
-          ? "-translate-y-[150vh] scale-75 duration-[5000ms] ease-in pointer-events-none"
+          ? "-translate-y-[150vh] scale-75 transition-all duration-[5000ms] ease-in pointer-events-none"
           : isReturning
-          ? "translate-y-0 duration-[4000ms] ease-out pointer-events-none"
+          ? "translate-y-0 transition-all duration-[6000ms] cubic-bezier(0.5, 0, 0.3, 1) pointer-events-none"
           : hasLaunched
           ? "translate-y-0 pointer-events-none"
-          : "translate-y-0 duration-300 hover:scale-110"
+          : "translate-y-0 transition-all duration-300 hover:scale-110"
       }`}
       aria-label="Launch rocket"
       disabled={hasLaunched}
@@ -217,31 +223,15 @@ const Rocket = () => {
           </>
         )}
 
-        {/* Shorter flame for landing burn */}
-        {isReturning && (
-          <>
-            <path
-              d="M 25 228 L 23 235 L 25 233 L 27.5 238 L 30 233 L 32 235 L 30 228"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="animate-pulse"
-            />
-            <path
-              d="M 20 228 L 18 232 L 20 231 L 21 235"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="animate-pulse"
-            />
-            <path
-              d="M 35 228 L 37 232 L 35 231 L 34 235"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="animate-pulse"
-            />
-          </>
+        {/* Landing burn flame - only center engine, half the height of booster (~62 units) */}
+        {isLandingBurn && (
+          <path
+            d="M 25 228 L 23 260 L 25 250 L 27.5 290 L 30 250 L 32 260 L 30 228"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="animate-pulse"
+          />
         )}
       </svg>
     </button>
