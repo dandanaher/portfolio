@@ -90,8 +90,8 @@ const Sidebar = () => {
                   )
                 }
               >
-                <span className="flex h-6 w-6 items-center justify-center">
-                  <img src={item.icon} alt={item.name} className="h-7 w-7" />
+                <span className="flex h-6 w-6 items-center justify-center flex-shrink-0">
+                  <img src={item.icon} alt={item.name} className="h-7 w-7 flex-shrink-0" />
                 </span>
                 <span
                   className={cn(
