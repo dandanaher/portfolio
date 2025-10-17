@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const Rocket = () => {
   const [isLaunching, setIsLaunching] = useState(false);
@@ -7,10 +7,59 @@ const Rocket = () => {
   const [isLandingBurn, setIsLandingBurn] = useState(false);
   const [legsDeployed, setLegsDeployed] = useState(false);
 
+  const launchAudioRef = useRef<HTMLAudioElement | null>(null);
+  const landingAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Initialize audio elements
+    // TODO: Replace with actual audio file path once downloaded
+    // Download from: https://freesound.org/people/CocoaBeachProductions/sounds/248111/
+    // Save to: src/assets/audio/falcon9-engine.mp3
+
+    // For now, we'll try to load the audio if it exists
+    try {
+      launchAudioRef.current = new Audio('/src/assets/audio/falcon9-engine.mp3');
+      landingAudioRef.current = new Audio('/src/assets/audio/falcon9-engine.mp3');
+
+      // Set volumes - launch is louder
+      launchAudioRef.current.volume = 0.7;
+      landingAudioRef.current.volume = 0.4;
+    } catch (error) {
+      console.log('Audio files not yet loaded. Download Falcon 9 audio and place in src/assets/audio/');
+    }
+  }, []);
+
   const handleLaunch = () => {
     if (hasLaunched) return;
 
+    // Play launch audio starting at 24 seconds (skip silence)
+    if (launchAudioRef.current) {
+      launchAudioRef.current.currentTime = 24;
+      launchAudioRef.current.volume = 0.7;
+      launchAudioRef.current.play().catch((error) => {
+        console.log('Audio playback failed:', error);
+      });
+    }
+
     setIsLaunching(true);
+
+    // Start fading out launch audio after 2.5 seconds
+    setTimeout(() => {
+      if (launchAudioRef.current) {
+        const fadeOutInterval = setInterval(() => {
+          if (launchAudioRef.current && launchAudioRef.current.volume > 0.02) {
+            launchAudioRef.current.volume = Math.max(0, launchAudioRef.current.volume - 0.02);
+          } else {
+            clearInterval(fadeOutInterval);
+            if (launchAudioRef.current) {
+              launchAudioRef.current.pause();
+              launchAudioRef.current.volume = 0.7; // Reset volume for next time
+            }
+          }
+        }, 50); // Fade out over ~2.5 seconds (35 steps * 50ms)
+      }
+    }, 2500);
+
     // After launch, start return sequence - extended to 5 seconds for slower ascent
     setTimeout(() => {
       setIsLaunching(false);
@@ -20,15 +69,37 @@ const Rocket = () => {
     // Activate landing burn when deceleration begins (slightly before halfway)
     setTimeout(() => {
       setIsLandingBurn(true);
+      // Play landing burn audio starting at 27 seconds (skip silence)
+      if (landingAudioRef.current) {
+        landingAudioRef.current.currentTime = 27;
+        landingAudioRef.current.volume = 0.4;
+        landingAudioRef.current.play().catch((error) => {
+          console.log('Landing audio playback failed:', error);
+        });
+      }
     }, 7500); // 5s launch + 2.5s to match deceleration curve
     // Deploy legs shortly after landing burn starts
     setTimeout(() => {
       setLegsDeployed(true);
     }, 7600); // 100ms after landing burn
-    // End return animation
+    // End return animation and fade out landing audio quickly
     setTimeout(() => {
       setIsReturning(false);
       setIsLandingBurn(false);
+      // Quick fade out for landing audio
+      if (landingAudioRef.current) {
+        const landingFadeInterval = setInterval(() => {
+          if (landingAudioRef.current && landingAudioRef.current.volume > 0.03) {
+            landingAudioRef.current.volume = Math.max(0, landingAudioRef.current.volume - 0.03);
+          } else {
+            clearInterval(landingFadeInterval);
+            if (landingAudioRef.current) {
+              landingAudioRef.current.pause();
+              landingAudioRef.current.volume = 0.4; // Reset volume for next time
+            }
+          }
+        }, 40); // Smoother fade out over ~500ms
+      }
     }, 11000); // 5s launch + 6s descent
   };
 
