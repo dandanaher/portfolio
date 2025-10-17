@@ -10,36 +10,36 @@ const Me = () => {
       <div className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
         {/* Left side - Intro */}
         <div className="flex flex-col items-start justify-start gap-6">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-4">
-              {/* Flippable profile picture */}
-              <div className="group relative h-12 w-12 flex-shrink-0 [perspective:1000px]">
-                <div className="relative h-full w-full rounded-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                  <div className="absolute inset-0 overflow-hidden rounded-full bg-gray-100 shadow-lg [backface-visibility:hidden]">
-                    <img
-                      src={faviconUrl}
-                      alt="Dan profile"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="absolute inset-0 overflow-hidden rounded-full bg-gray-200 shadow-lg [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                    <img
-                      src={profileFaceUrl}
-                      alt="Dan alternate portrait"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
+          <div className="flex items-start gap-4">
+            {/* Flippable profile picture */}
+            <div className="group relative h-32 w-32 flex-shrink-0 [perspective:1000px]">
+              <div className="relative h-full w-full rounded-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                <div className="absolute inset-0 overflow-hidden rounded-full bg-gray-100 shadow-lg [backface-visibility:hidden]">
+                  <img
+                    src={faviconUrl}
+                    alt="Dan profile"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="absolute inset-0 overflow-hidden rounded-full bg-gray-200 shadow-lg [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                  <img
+                    src={profileFaceUrl}
+                    alt="Dan alternate portrait"
+                    className="h-full w-full object-cover"
+                  />
                 </div>
               </div>
+            </div>
+            <div className="flex flex-col justify-between gap-4 py-1">
               <h1 className="text-5xl font-serif text-light-text dark:text-dark-text">
                 hey! i'm dan
               </h1>
+              <p className="text-lg text-light-text-muted dark:text-dark-text-muted">
+                aerospace engineering student. 21 years old, based in London.
+              </p>
             </div>
-            <p className="text-lg text-light-text-muted dark:text-dark-text-muted">
-              aerospace engineering student. 21 years old, based in London.
-            </p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 pl-36">
             <a
               href="https://github.com/dandanaher"
               aria-label="GitHub"
