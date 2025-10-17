@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import falcon9Audio from "@/assets/audio/falcon9-engine.mp3";
 
 const Rocket = () => {
   const [isLaunching, setIsLaunching] = useState(false);
@@ -11,21 +12,16 @@ const Rocket = () => {
   const landingAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Initialize audio elements
-    // TODO: Replace with actual audio file path once downloaded
-    // Download from: https://freesound.org/people/CocoaBeachProductions/sounds/248111/
-    // Save to: src/assets/audio/falcon9-engine.mp3
-
-    // For now, we'll try to load the audio if it exists
+    // Initialize audio elements with imported audio file
     try {
-      launchAudioRef.current = new Audio('/src/assets/audio/falcon9-engine.mp3');
-      landingAudioRef.current = new Audio('/src/assets/audio/falcon9-engine.mp3');
+      launchAudioRef.current = new Audio(falcon9Audio);
+      landingAudioRef.current = new Audio(falcon9Audio);
 
       // Set volumes - launch is louder
       launchAudioRef.current.volume = 0.7;
       landingAudioRef.current.volume = 0.4;
     } catch (error) {
-      console.log('Audio files not yet loaded. Download Falcon 9 audio and place in src/assets/audio/');
+      console.log('Audio initialization failed:', error);
     }
   }, []);
 
