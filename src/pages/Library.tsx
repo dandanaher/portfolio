@@ -37,14 +37,14 @@ const Library = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-12 bg-[#FAF8F4] px-8 py-10 text-[#3C3C3A] lg:px-14 lg:py-12 dark:bg-[#262624] dark:text-[#FAF8F4]">
-      <header className="flex flex-col gap-3 border-b border-[#E5E1DB] pb-6 dark:border-[#4a4a48]">
-        <h1 className="font-serif text-5xl tracking-tight text-[#2a2b29] dark:text-[#FAF8F4]">Library</h1>
-        <p className="max-w-2xl text-sm leading-relaxed text-[#6B6B68] dark:text-[#9a9a98]">
+    <div className="flex flex-1 flex-col gap-12 bg-[#FAF8F4] text-[#3C3C3A] dark:bg-[#262624] dark:text-[#FAF8F4]">
+      <header className="flex flex-col gap-3 border-b border-[#E5E1DB] px-12 py-10 dark:border-[#4a4a48]">
+        <h1 className="mb-1 font-serif text-5xl tracking-tight text-[#2a2b29] dark:text-[#FAF8F4]">Library</h1>
+        <p className="font-serif text-sm text-[#8A8984] dark:text-[#9a9a98]">
           A record of some of the books I've read and am currently reading.
         </p>
       </header>
-      <section className="flex flex-col gap-6">
+      <section className="flex flex-col gap-6 px-12">
         {selectedBook ? (
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-12">
             <HeroBook book={selectedBook} />
@@ -69,13 +69,13 @@ const Library = () => {
         )}
       </section>
 
-      <section className="mt-auto flex flex-col gap-8 pb-12">
-        <div className="relative -mx-4 px-4">
+      <section className="mt-auto flex flex-col gap-8 pb-12 px-12">
+        <div className="relative">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
             {currentBook ? (
               <div className="flex w-[11rem] shrink-0 flex-col items-start gap-3">
                 <span className="whitespace-nowrap text-xs uppercase tracking-[0.45em] text-[#8A8984] dark:text-[#9a9a98]">
-                  Current Read
+                  Currently Reading
                 </span>
                 <div className="group relative w-full">
                   <div
@@ -111,7 +111,7 @@ const Library = () => {
               <div className="relative">
                 <div className="custom-scrollbar max-h-[52vh] overflow-y-auto pr-2 pb-12">
                   {completedBooks.length > 0 ? (
-                    <div className="grid grid-cols-[repeat(auto-fill,minmax(8rem,1fr))] gap-4">
+                    <div className="grid grid-cols-[repeat(10,minmax(8rem,1fr))] gap-4">
                       {completedBooks.map((book) => {
                         const isSelected = selectedBook?.id === book.id;
 
