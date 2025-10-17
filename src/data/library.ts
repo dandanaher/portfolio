@@ -12,6 +12,8 @@ export type LibraryBook = {
   status: "current" | "completed";
   description: string;
   coverScale?: number;
+  rating?: number; // 0.5-5 stars (supports half stars)
+  review?: string; // Personal review/thoughts
 };
 
 export const libraryBooks: LibraryBook[] = [
@@ -79,6 +81,9 @@ export const libraryBooks: LibraryBook[] = [
     status: "completed",
     description:
       "Tim Peake charts childhood dreams, astronaut training, and life aboard the International Space Station.",
+    rating: 4,
+    review:
+      "Inspiring and humbling. A rarity to get such first-hand insight into spaceflight on a human scale. This book is linked to special memories for me. Not only is it a good read, of course, but my copy is signed by Tim himself! I watched his talk with my Dad while he was promoting the book, and by fluke we ran into him in the chip shop before the event. He's an awesome, down-to-earth guy (pun intended), and he made time for my enthusiasm even though he was likely eager to get into the venue. Recommended if you're a space nerd like myself.",
   },
   {
     id: "the-three-body-problem",

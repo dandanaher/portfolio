@@ -370,16 +370,15 @@ const Rocket = () => {
     setTimeout(() => {
       if (launchAudioRef.current) {
         const fadeOutInterval = setInterval(() => {
-          if (launchAudioRef.current && launchAudioRef.current.volume > 0.02) {
+          if (launchAudioRef.current && launchAudioRef.current.volume > 0) {
             launchAudioRef.current.volume = Math.max(0, launchAudioRef.current.volume - 0.02);
-          } else {
-            clearInterval(fadeOutInterval);
-            if (launchAudioRef.current) {
+            if (launchAudioRef.current.volume === 0) {
+              clearInterval(fadeOutInterval);
               launchAudioRef.current.pause();
               launchAudioRef.current.volume = 0.7; // Reset volume for next time
             }
           }
-        }, 50); // Fade out over ~2.5 seconds (35 steps * 50ms)
+        }, 100); // Fade out over ~5 seconds (35 steps * 100ms)
       }
     }, 2500);
 
@@ -423,16 +422,15 @@ const Rocket = () => {
       // Quick fade out for landing audio
       if (landingAudioRef.current) {
         const landingFadeInterval = setInterval(() => {
-          if (landingAudioRef.current && landingAudioRef.current.volume > 0.03) {
+          if (landingAudioRef.current && landingAudioRef.current.volume > 0) {
             landingAudioRef.current.volume = Math.max(0, landingAudioRef.current.volume - 0.03);
-          } else {
-            clearInterval(landingFadeInterval);
-            if (landingAudioRef.current) {
+            if (landingAudioRef.current.volume === 0) {
+              clearInterval(landingFadeInterval);
               landingAudioRef.current.pause();
               landingAudioRef.current.volume = 0.4; // Reset volume for next time
             }
           }
-        }, 40); // Smoother fade out over ~500ms
+        }, 80); // Smoother fade out over ~1 second
       }
     }, 11000); // 5s launch + 6s descent
   };

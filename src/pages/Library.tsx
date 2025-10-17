@@ -62,20 +62,42 @@ const Library = () => {
               </p>
             </div>
             <div className="flex h-72 flex-1 flex-col gap-6 rounded-xl border border-[#E5E1DB]/50 bg-[#FAF8F4]/40 p-8 backdrop-blur-sm dark:border-[#4a4a48]/50 dark:bg-[#262624]/40">
-              <div className="flex gap-1.5">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <svg
-                    key={star}
-                    className="h-8 w-8 text-[#E5E1DB] dark:text-[#4a4a48]"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
+              {selectedBook.rating !== undefined && (
+                <div className="flex gap-1.5">
+                  {[1, 2, 3, 4, 5].map((star) => {
+                    const rating = selectedBook.rating!;
+                    const isFull = star <= rating;
+                    const isHalf = star === Math.ceil(rating) && rating % 1 !== 0;
+                    const isEmpty = star > Math.ceil(rating);
+
+                    return (
+                      <div key={star} className="relative h-8 w-8">
+                        {/* Background empty star */}
+                        <svg
+                          className="absolute inset-0 h-8 w-8 text-[#E5E1DB] dark:text-[#4a4a48]"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        {/* Foreground filled star (full or half) */}
+                        {(isFull || isHalf) && (
+                          <svg
+                            className="absolute inset-0 h-8 w-8 text-[#FACC15] dark:text-[#FACC15]"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            style={isHalf ? { clipPath: 'inset(0 50% 0 0)' } : undefined}
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
               <p className="text-base italic text-[#8A8984] dark:text-[#9a9a98]">
-                thoughts coming soon
+                {selectedBook.review ?? "thoughts coming soon"}
               </p>
             </div>
           </div>
@@ -228,22 +250,22 @@ const HeroBook = ({ book }: HeroBookProps) => {
     setIsCoverBroken(false);
   }, [coverSrc]);
 
-  useEffect(() => {
-    const handleMouseMove = (event: globalThis.MouseEvent) => {
-      const x = event.clientX;
-      const y = event.clientY;
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
+  const handleMouseMove = useCallback((event: MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
-      const maxTilt = 20;
-      const nextY = ((x - centerX) / centerX) * maxTilt;
-      const nextX = -((y - centerY) / centerY) * maxTilt;
+    const maxTilt = 20;
+    const nextY = ((x - centerX) / centerX) * maxTilt;
+    const nextX = -((y - centerY) / centerY) * maxTilt;
 
-      setRotation({ x: nextX, y: nextY });
-    };
+    setRotation({ x: nextX, y: nextY });
+  }, []);
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+  const handleMouseLeave = useCallback(() => {
+    setRotation({ x: 0, y: 0 });
   }, []);
 
   const hasCover = Boolean(coverSrc) && !isCoverBroken;
@@ -263,7 +285,11 @@ const HeroBook = ({ book }: HeroBookProps) => {
   const pageColor = "#f5f1e6";
 
   return (
-    <div className="relative h-72 w-48">
+    <div
+      className="relative h-72 w-48"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       <div
         className="absolute inset-0 opacity-25 blur-3xl"
           style={{
