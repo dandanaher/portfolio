@@ -1,21 +1,25 @@
-import type { ElementType, FocusEvent } from "react";
+import type { FocusEvent } from "react";
 import { NavLink } from "react-router-dom";
-import { BookMarked, PenSquare, Settings, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/hooks/use-sidebar";
 
+import meIcon from "@/assets/branding/me_icon.png";
+import libraryIcon from "@/assets/branding/library_icon.png";
+import projectsIcon from "@/assets/branding/projects_icon.png";
+import thoughtsIcon from "@/assets/branding/thoughts_icon.png";
+
 type NavItem = {
   path: string;
   name: string;
-  icon: ElementType;
+  icon: string;
 };
 
 const navItems: NavItem[] = [
-  { path: "/me", name: "me", icon: User },
-  { path: "/library", name: "library", icon: BookMarked },
-  { path: "/projects", name: "projects", icon: Settings },
-  { path: "/thoughts", name: "thoughts", icon: PenSquare },
+  { path: "/me", name: "me", icon: meIcon },
+  { path: "/library", name: "library", icon: libraryIcon },
+  { path: "/projects", name: "projects", icon: projectsIcon },
+  { path: "/thoughts", name: "thoughts", icon: thoughtsIcon },
 ];
 
 const Sidebar = () => {
@@ -87,7 +91,7 @@ const Sidebar = () => {
                 }
               >
                 <span className="flex h-6 w-6 items-center justify-center">
-                  <item.icon className="h-6 w-6" />
+                  <img src={item.icon} alt={item.name} className="h-7 w-7" />
                 </span>
                 <span
                   className={cn(
