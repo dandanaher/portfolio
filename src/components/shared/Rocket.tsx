@@ -5,6 +5,7 @@ const Rocket = () => {
   const [isReturning, setIsReturning] = useState(false);
   const [hasLaunched, setHasLaunched] = useState(false);
   const [isLandingBurn, setIsLandingBurn] = useState(false);
+  const [legsDeployed, setLegsDeployed] = useState(false);
 
   const handleLaunch = () => {
     if (hasLaunched) return;
@@ -20,6 +21,10 @@ const Rocket = () => {
     setTimeout(() => {
       setIsLandingBurn(true);
     }, 7500); // 5s launch + 2.5s to match deceleration curve
+    // Deploy legs shortly after landing burn starts
+    setTimeout(() => {
+      setLegsDeployed(true);
+    }, 7600); // 100ms after landing burn
     // End return animation
     setTimeout(() => {
       setIsReturning(false);
@@ -141,48 +146,42 @@ const Rocket = () => {
           strokeLinejoin="round"
         />
 
-        {/* Landing legs - always visible, either stowed or deployed - drawn AFTER engine so they're on top */}
-        {isLaunching || (!isReturning && !hasLaunched) ? (
-          <>
-            {/* Left leg - stowed position (larger, more visible) */}
+        {/* Landing legs - same element throughout, rotates when legsDeployed */}
+        <>
+          {/* Left leg - deployed shape that rotates from stowed to deployed, attachment at y=218 */}
+          <g
+            style={{
+              transformOrigin: "22px 218px",
+              transform: legsDeployed ? "rotate(0deg)" : "rotate(142deg)",
+              transition: legsDeployed ? "transform 3s ease-out" : "none"
+            }}
+          >
             <path
-              d="M 22 200 L 18 222 L 20 222 L 22 210"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="fill-light-text-dark dark:fill-dark-text"
-            />
-
-            {/* Right leg - stowed position (larger, more visible) */}
-            <path
-              d="M 33 200 L 37 222 L 35 222 L 33 210"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="fill-light-text-dark dark:fill-dark-text"
-            />
-          </>
-        ) : (
-          <>
-            {/* Left leg - deployed position, solid black */}
-            <path
-              d="M 22 205 L 8 235 L 11 235 L 22 215"
+              d="M 22 218 L 8 238 L 11 238 L 22 228"
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
               className="fill-light-text-dark dark:fill-dark-text"
             />
+          </g>
 
-            {/* Right leg - deployed position, solid black */}
+          {/* Right leg - deployed shape that rotates from stowed to deployed, attachment at y=218 */}
+          <g
+            style={{
+              transformOrigin: "33px 218px",
+              transform: legsDeployed ? "rotate(0deg)" : "rotate(-142deg)",
+              transition: legsDeployed ? "transform 3s ease-out" : "none"
+            }}
+          >
             <path
-              d="M 33 205 L 47 235 L 44 235 L 33 215"
+              d="M 33 218 L 47 238 L 44 238 L 33 228"
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
               className="fill-light-text-dark dark:fill-dark-text"
             />
-          </>
-        )}
+          </g>
+        </>
 
         {/* Merlin engines (9 in a circle, showing 5 visible) */}
         <circle cx="21" cy="226" r="1.5" strokeWidth="1" />

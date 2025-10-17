@@ -55,3 +55,21 @@ body.dark,
     transform-origin: top;
   }
 }
+
+@keyframes deployLegLeft {
+  from {
+    transform: rotate(70deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes deployLegRight {
+  from {
+    transform: rotate(-70deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
