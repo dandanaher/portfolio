@@ -48,9 +48,9 @@ const Rocket = () => {
       disabled={hasLaunched}
     >
       <svg
-        width="55"
+        width="80"
         height="400"
-        viewBox="0 0 55 400"
+        viewBox="-10 0 75 400"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="stroke-light-text-dark dark:stroke-dark-text drop-shadow-lg"
@@ -148,16 +148,16 @@ const Rocket = () => {
 
         {/* Landing legs - same element throughout, rotates when legsDeployed */}
         <>
-          {/* Left leg - deployed shape that rotates from stowed to deployed, attachment at y=218 */}
+          {/* Left leg - rotates and translates upward during deployment */}
           <g
             style={{
-              transformOrigin: "22px 218px",
-              transform: legsDeployed ? "rotate(0deg)" : "rotate(142deg)",
+              transformOrigin: "24px 227px",
+              transform: legsDeployed ? "translateY(-10px) rotate(0deg)" : "rotate(142deg)",
               transition: legsDeployed ? "transform 3s ease-out" : "none"
             }}
           >
             <path
-              d="M 22 218 L 8 238 L 11 238 L 22 228"
+              d="M 24 227 L 5 255 L 9 255 L 24 239"
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -165,16 +165,16 @@ const Rocket = () => {
             />
           </g>
 
-          {/* Right leg - deployed shape that rotates from stowed to deployed, attachment at y=218 */}
+          {/* Right leg - rotates and translates upward during deployment */}
           <g
             style={{
-              transformOrigin: "33px 218px",
-              transform: legsDeployed ? "rotate(0deg)" : "rotate(-142deg)",
+              transformOrigin: "31px 227px",
+              transform: legsDeployed ? "translateY(-10px) rotate(0deg)" : "rotate(-142deg)",
               transition: legsDeployed ? "transform 3s ease-out" : "none"
             }}
           >
             <path
-              d="M 33 218 L 47 238 L 44 238 L 33 228"
+              d="M 31 227 L 50 255 L 46 255 L 31 239"
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
