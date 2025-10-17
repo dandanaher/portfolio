@@ -220,6 +220,9 @@ const Rocket = () => {
   }, [loxConnected, rp1Connected, loxLevel, rp1Level]);
 
   const handleHoseDragStart = (hoseId: 'lox' | 'rp1', e: React.MouseEvent | React.TouchEvent) => {
+    // Prevent dragging after rocket has launched
+    if (hasLaunched) return;
+
     console.log('Drag start!', hoseId);
     e.stopPropagation();
     setHoses(prev => prev.map(h =>
@@ -439,7 +442,7 @@ const Rocket = () => {
   return (
     <div
       ref={containerRef}
-      className="fixed bottom-8 right-8 z-50"
+      className="fixed bottom-0 right-8 z-50"
       style={{ width: '200px', height: '500px', pointerEvents: 'none' }}
     >
       {/* Launch Tower - separate fixed SVG */}
@@ -451,7 +454,7 @@ const Rocket = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="stroke-light-text-dark dark:stroke-dark-text drop-shadow-lg"
-          style={{ marginBottom: '-150px' }}
+          style={{ marginBottom: '-212px' }}
         >
           {/* Launch Tower - half visible on the right side */}
           <g style={{ pointerEvents: 'none' }}>
@@ -550,10 +553,10 @@ const Rocket = () => {
                   stroke="currentColor"
                   strokeWidth="2"
                   style={{
-                    cursor: hose.connected ? 'default' : 'grab'
+                    cursor: hose.connected || hasLaunched ? 'default' : 'grab'
                   }}
-                  onMouseDown={(e) => !hose.connected && handleHoseDragStart(hose.id, e)}
-                  onTouchStart={(e) => !hose.connected && handleHoseDragStart(hose.id, e)}
+                  onMouseDown={(e) => !hose.connected && !hasLaunched && handleHoseDragStart(hose.id, e)}
+                  onTouchStart={(e) => !hose.connected && !hasLaunched && handleHoseDragStart(hose.id, e)}
                 />
               </g>
             );
@@ -587,10 +590,10 @@ const Rocket = () => {
                   stroke="currentColor"
                   strokeWidth="2"
                   style={{
-                    cursor: hose.connected ? 'default' : 'grab'
+                    cursor: hose.connected || hasLaunched ? 'default' : 'grab'
                   }}
-                  onMouseDown={(e) => !hose.connected && handleHoseDragStart(hose.id, e)}
-                  onTouchStart={(e) => !hose.connected && handleHoseDragStart(hose.id, e)}
+                  onMouseDown={(e) => !hose.connected && !hasLaunched && handleHoseDragStart(hose.id, e)}
+                  onTouchStart={(e) => !hose.connected && !hasLaunched && handleHoseDragStart(hose.id, e)}
                 />
               </g>
             );
@@ -621,7 +624,7 @@ const Rocket = () => {
           xmlns="http://www.w3.org/2000/svg"
           className="stroke-light-text-dark dark:stroke-dark-text drop-shadow-lg"
           style={{
-            marginBottom: '-150px',
+            marginBottom: '-212px',
             cursor: canLaunch ? 'pointer' : 'default',
             pointerEvents: 'auto'
           }}
