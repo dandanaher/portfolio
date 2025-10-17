@@ -61,6 +61,23 @@ const Library = () => {
                 {selectedBook.description}
               </p>
             </div>
+            <div className="flex h-72 flex-1 flex-col gap-6 rounded-xl border border-[#E5E1DB]/50 bg-[#FAF8F4]/40 p-8 backdrop-blur-sm dark:border-[#4a4a48]/50 dark:bg-[#262624]/40">
+              <div className="flex gap-1.5">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <svg
+                    key={star}
+                    className="h-8 w-8 text-[#E5E1DB] dark:text-[#4a4a48]"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-base italic text-[#8A8984] dark:text-[#9a9a98]">
+                thoughts coming soon
+              </p>
+            </div>
           </div>
         ) : (
           <p className="text-base text-[#8A8984] dark:text-[#9a9a98]">
@@ -103,7 +120,7 @@ const Library = () => {
               </div>
             ) : null}
             <div className="flex flex-1 flex-col gap-4 lg:pl-4">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-end gap-3">
                 <span className="whitespace-nowrap text-xs uppercase tracking-[0.45em] text-[#8A8984] dark:text-[#9a9a98]">
                   Previously Read
                 </span>
@@ -204,34 +221,29 @@ type HeroBookProps = {
 
 const HeroBook = ({ book }: HeroBookProps) => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  const [isInteracting, setIsInteracting] = useState(false);
   const [isCoverBroken, setIsCoverBroken] = useState(false);
   const coverSrc = getCoverSource(book.coverImage);
+
   useEffect(() => {
     setIsCoverBroken(false);
   }, [coverSrc]);
 
-  const handleMouseMove = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+  useEffect(() => {
+    const handleMouseMove = (event: globalThis.MouseEvent) => {
+      const x = event.clientX;
+      const y = event.clientY;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
 
-      const maxTilt = 24;
+      const maxTilt = 20;
       const nextY = ((x - centerX) / centerX) * maxTilt;
       const nextX = -((y - centerY) / centerY) * maxTilt;
 
       setRotation({ x: nextX, y: nextY });
-      setIsInteracting(true);
-    },
-    []
-  );
+    };
 
-  const handleMouseLeave = useCallback(() => {
-    setRotation({ x: 0, y: 0 });
-    setIsInteracting(false);
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   const hasCover = Boolean(coverSrc) && !isCoverBroken;
@@ -261,8 +273,6 @@ const HeroBook = ({ book }: HeroBookProps) => {
       <div
         className="relative h-full w-full"
         style={{ perspective }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
       >
         <div
           className="absolute inset-0 shadow-[0_55px_95px_-48px_rgba(34,34,32,0.92)] transition-transform"
@@ -270,7 +280,7 @@ const HeroBook = ({ book }: HeroBookProps) => {
             transformStyle: "preserve-3d",
             transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)` +
               ` translateZ(${spineThickness / 2}px)`,
-            transition: isInteracting ? "transform 70ms ease-out" : "transform 360ms ease-out",
+            transition: "transform 100ms ease-out",
           }}
         >
           <div
