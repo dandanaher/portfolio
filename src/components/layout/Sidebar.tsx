@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/hooks/use-sidebar";
+import { THEME_COLORS } from "@/constants/theme";
 
 import meIcon from "@/assets/branding/me_icon.png";
 import libraryIcon from "@/assets/branding/library_icon.png";
@@ -48,7 +49,7 @@ const Sidebar = () => {
     <aside
       className={cn(
         "fixed inset-y-0 left-0 z-50 flex h-full flex-col border-r border-white/10 bg-white/12 shadow-lg shadow-slate-900/5 backdrop-blur-md transition-[width] duration-300 supports-[backdrop-filter]:bg-white/8",
-        "dark:border-gray-800/20 dark:bg-[#262624]/12 dark:supports-[backdrop-filter]:bg-[#262624]/8",
+        "dark:border-gray-800/20 dark:bg-dark-bg/12 dark:supports-[backdrop-filter]:bg-dark-bg/8",
         isExpanded ? "w-44" : "w-16"
       )}
       onMouseEnter={handleMouseEnter}
@@ -63,12 +64,12 @@ const Sidebar = () => {
           isExpanded ? "px-6" : ""
         )}
       >
-        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xl font-bold font-sans text-[#3c3d3b] dark:text-[#FAF8F4]">
+        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xl font-bold font-sans text-light-text dark:text-dark-text">
           DAN
         </span>
         <span
           className={cn(
-            "absolute left-[3.625rem] top-1/2 -translate-y-1/2 text-xl font-bold font-sans text-[#3c3d3b] transition-opacity duration-300 dark:text-[#FAF8F4]",
+            "absolute left-[3.625rem] top-1/2 -translate-y-1/2 text-xl font-bold font-sans text-light-text transition-opacity duration-300 dark:text-dark-text",
             isExpanded ? "opacity-100" : "opacity-0"
           )}
         >
@@ -84,9 +85,9 @@ const Sidebar = () => {
                 to={item.path}
                 className={({ isActive }) =>
                   cn(
-                    "group relative flex items-center gap-4 rounded-full p-2 text-[#626360] transition-colors duration-200 ease-out",
-                    "hover:text-[#3c3d3b] dark:text-[#9a9a98] dark:hover:text-[#FAF8F4]",
-                    isActive ? "active text-[#2a2b29] dark:text-[#FAF8F4]" : ""
+                    "group relative flex items-center gap-4 rounded-full p-2 text-light-text-muted transition-colors duration-200 ease-out",
+                    "hover:text-light-text dark:text-dark-text-subtle dark:hover:text-dark-text",
+                    isActive ? "active text-light-text-dark dark:text-dark-text" : ""
                   )
                 }
               >
@@ -95,10 +96,10 @@ const Sidebar = () => {
                 </span>
                 <span
                   className={cn(
-                    "absolute right-4 w-24 text-right text-lg font-serif lowercase text-[#626360] transition-all duration-300",
-                    "dark:text-[#9a9a98] dark:group-[.active]:text-[#FAF8F4]",
+                    "absolute right-4 w-24 text-right text-lg font-serif lowercase text-light-text-muted transition-all duration-300",
+                    "dark:text-dark-text-subtle dark:group-[.active]:text-dark-text",
                     isExpanded ? "opacity-100" : "opacity-0",
-                    "group-[.active]:text-[#2a2b29]"
+                    "group-[.active]:text-light-text-dark"
                   )}
                 >
                   {item.name}

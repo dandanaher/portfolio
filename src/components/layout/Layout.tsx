@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import faviconUrl from "@/assets/branding/favicon.png";
 import asciiLogo from "@/assets/branding/ascii_logo_60x30_inverted.txt?raw";
+import { THEME_COMBINATIONS } from "@/constants/theme";
 
 const Layout = () => {
   useEffect(() => {
@@ -78,7 +79,7 @@ const Layout = () => {
   
   return (
     <SidebarProvider>
-      <div className="relative h-screen w-full overflow-hidden bg-[#FAF8F4] dark:bg-[#262624]">
+      <div className={`relative h-screen w-full overflow-hidden ${THEME_COMBINATIONS.background}`}>
         <Sidebar />
         <div className="h-full flex flex-col pl-16">
           <Header />

@@ -3,30 +3,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * CSS variables are injected from src/constants/theme.ts via initThemeColors()
+ * DO NOT hardcode color values here - edit theme.ts instead for single source of truth
+ */
+
 :root {
   font-family: "Georgia", "Times New Roman", serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  background-color: #faf8f4;
-  color: #3c3d3b;
+  background-color: var(--color-light-bg);
+  color: var(--color-light-text);
 }
 
 :root.dark {
-  background-color: #262624;
-  color: #faf8f4;
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-text);
 }
 
 body {
   margin: 0;
-  background-color: #faf8f4;
-  color: #3c3d3b;
+  background-color: var(--color-light-bg);
+  color: var(--color-light-text);
   font-family: "Georgia", "Times New Roman", serif;
 }
 
 body.dark,
 .dark body {
-  background-color: #262624;
-  color: #faf8f4;
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-text);
 }
 
 #root {

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { THEME_COLORS } from "./src/constants/theme";
 
 const config: Config = {
   darkMode: "class",
@@ -6,28 +7,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Light mode colors
+        // Light mode colors - imported from single source of truth
         light: {
-          bg: "#FAF8F4",
-          text: "#3c3d3b",
-          "text-dark": "#2a2b29",
-          "text-muted": "#6B6B68",
-          "text-subtle": "#8A8984",
-          border: "#E5E1DB",
+          bg: THEME_COLORS.light.bg,
+          text: THEME_COLORS.light.text,
+          "text-dark": THEME_COLORS.light.textDark,
+          "text-muted": THEME_COLORS.light.textMuted,
+          "text-subtle": THEME_COLORS.light.textSubtle,
+          border: THEME_COLORS.light.border,
         },
-        // Dark mode colors
+        // Dark mode colors - imported from single source of truth
         dark: {
-          bg: "#262624",
-          "bg-elevated": "#1a1a18",
-          text: "#FAF8F4",
-          "text-muted": "#c5c5c0",
-          "text-subtle": "#9a9a98",
-          border: "#4a4a48",
+          bg: THEME_COLORS.dark.bg,
+          "bg-elevated": THEME_COLORS.dark.bgElevated,
+          text: THEME_COLORS.dark.text,
+          "text-muted": THEME_COLORS.dark.textMuted,
+          "text-subtle": THEME_COLORS.dark.textSubtle,
+          border: THEME_COLORS.dark.border,
         },
-        // Accent colors
+        // Accent colors - imported from single source of truth
         accent: {
-          green: "#85A78D",
-          yellow: "#f4b860",
+          green: THEME_COLORS.accent.green,
+          yellow: THEME_COLORS.accent.yellow,
         },
       },
     },
