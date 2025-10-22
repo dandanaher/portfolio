@@ -601,16 +601,16 @@ const Rocket = () => {
       </div>
 
       <div
-        className={`absolute bottom-0 right-0 ${
+        className={`absolute bottom-0 ${
           isLaunching
-            ? "-translate-y-[150vh] scale-75 transition-all duration-[5000ms] ease-in"
+            ? "right-0 -translate-y-[150vh] scale-75 transition-all duration-[5000ms] ease-in"
             : isReturning
-            ? "-translate-y-[18px] transition-all duration-[6000ms] cubic-bezier(0.5, 0, 0.3, 1)"
+            ? "left-8 -translate-y-[18px] transition-all duration-[6000ms] cubic-bezier(0.5, 0, 0.3, 1)"
             : hasLaunched
-            ? "-translate-y-[18px]"
+            ? "left-8 -translate-y-[18px]"
             : canLaunch
-            ? "translate-y-0 transition-all duration-300 hover:scale-105"
-            : "translate-y-0"
+            ? "right-0 translate-y-0 transition-all duration-300 hover:scale-105"
+            : "right-0 translate-y-0"
         }`}
         style={{ pointerEvents: 'auto', zIndex: 1 }}
       >

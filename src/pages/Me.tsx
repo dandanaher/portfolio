@@ -32,10 +32,10 @@ const Me = () => {
             </div>
             <div className="flex flex-col justify-between gap-4 py-1">
               <h1 className="text-5xl font-serif text-light-text dark:text-dark-text">
-                hey! i'm dan
+                dan danaher
               </h1>
               <p className="text-lg text-light-text-muted dark:text-dark-text-muted">
-                aerospace engineering student. 21 years old, based in London.
+                aerospace engineering student. 21, based in London.
               </p>
             </div>
           </div>
