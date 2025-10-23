@@ -41,7 +41,7 @@ const Library = () => {
   };
 
   return (
-    <div className={`flex flex-1 flex-col gap-12 ${THEME_COMBINATIONS.background} ${THEME_COMBINATIONS.text}`}>
+    <div className={`flex flex-1 flex-col gap-12 overflow-y-auto ${THEME_COMBINATIONS.background} ${THEME_COMBINATIONS.text}`}>
       <header className={`flex flex-col gap-3 border-b ${THEME_COMBINATIONS.border} px-6 md:px-12 py-10`}>
         {/* Mobile back button */}
         <button
@@ -410,18 +410,18 @@ const HeroBook = ({ book, isMobile = false }: HeroBookProps) => {
       const gamma = event.gamma || 0; // left-right tilt (-90 to 90)
 
       // Convert device orientation to book rotation
-      // gamma controls Y rotation (left-right tilt)
-      // beta controls X rotation (front-back tilt)
-      const maxTilt = 20;
+      // Much more sensitive - smaller phone movements = bigger rotation
+      const maxTilt = 30; // Increased from 20
+      const sensitivity = 3; // Multiplier for more responsiveness
 
-      // Normalize gamma (-90 to 90) to rotation (-maxTilt to maxTilt)
-      const nextY = (gamma / 90) * maxTilt;
+      // Normalize gamma (-90 to 90) to rotation with high sensitivity
+      // Clamp to maxTilt to prevent over-rotation
+      const nextY = Math.max(-maxTilt, Math.min(maxTilt, (gamma / 30) * maxTilt * sensitivity));
 
-      // Normalize beta, accounting for typical reading angle (around 45 degrees)
-      // When phone is flat (beta = 0), book should be slightly tilted
-      // When phone is vertical (beta = 90), book should be more tilted
-      const adjustedBeta = beta - 45; // Adjust for typical holding angle
-      const nextX = -(adjustedBeta / 45) * maxTilt;
+      // Normalize beta with high sensitivity
+      // Adjust for typical holding angle (around 45 degrees)
+      const adjustedBeta = beta - 45;
+      const nextX = Math.max(-maxTilt, Math.min(maxTilt, -(adjustedBeta / 15) * maxTilt * sensitivity));
 
       setRotation({ x: nextX, y: nextY });
     };
