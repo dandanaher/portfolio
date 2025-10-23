@@ -1,11 +1,14 @@
 import type { CSSProperties, MouseEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 import type { LibraryBook } from "@/data/library";
 import { libraryBooks } from "@/data/library";
 import { THEME_COMBINATIONS } from "@/constants/theme";
 
 const Library = () => {
+  const navigate = useNavigate();
   const currentBook = useMemo(
     () => libraryBooks.find((book) => book.status === "current") ?? null,
     []
@@ -39,67 +42,143 @@ const Library = () => {
 
   return (
     <div className={`flex flex-1 flex-col gap-12 ${THEME_COMBINATIONS.background} ${THEME_COMBINATIONS.text}`}>
-      <header className={`flex flex-col gap-3 border-b ${THEME_COMBINATIONS.border} px-12 py-10`}>
-        <h1 className={`mb-1 font-serif text-5xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>Library</h1>
+      <header className={`flex flex-col gap-3 border-b ${THEME_COMBINATIONS.border} px-6 md:px-12 py-10`}>
+        {/* Mobile back button */}
+        <button
+          onClick={() => navigate('/me')}
+          className="flex items-center gap-2 text-sm text-light-text-muted hover:text-light-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors md:hidden mb-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span>Back to home</span>
+        </button>
+        <h1 className={`mb-1 font-serif text-4xl md:text-5xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>Library</h1>
         <p className={`font-serif text-sm ${THEME_COMBINATIONS.textSubtle}`}>
           A record of some of the books I've read and am currently reading.
         </p>
       </header>
-      <section className="flex flex-col gap-6 px-12">
+      <section className="flex flex-col gap-6 px-6 md:px-12">
         {selectedBook ? (
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-12">
-            <HeroBook book={selectedBook} />
-            <div className="flex flex-1 flex-col gap-5">
-              <div>
-                <h1 className={`text-3xl font-serif leading-tight lg:text-[38px] ${THEME_COMBINATIONS.text}`}>
-                  {selectedBook.title}
-                </h1>
-                <p className={`mt-3 text-sm uppercase tracking-[0.25em] ${THEME_COMBINATIONS.textSubtle}`}>
-                  {selectedBook.author} · {selectedBook.year}
+          <div className="flex flex-col gap-6">
+            {/* Mobile Layout: Book on left, title and description on right */}
+            <div className="flex flex-col gap-6 md:hidden">
+              {/* Book and Info side by side */}
+              <div className="flex gap-4 items-start">
+                {/* Smaller book preview on the left */}
+                <div className="w-32 flex-shrink-0">
+                  <HeroBook book={selectedBook} isMobile />
+                </div>
+
+                {/* Title, Author, Description, and Rating on the right */}
+                <div className="flex flex-1 flex-col gap-3">
+                  <div>
+                    <h1 className={`text-xl font-serif leading-tight ${THEME_COMBINATIONS.text}`}>
+                      {selectedBook.title}
+                    </h1>
+                    <p className={`mt-2 text-xs uppercase tracking-[0.25em] ${THEME_COMBINATIONS.textSubtle}`}>
+                      {selectedBook.author} · {selectedBook.year}
+                    </p>
+                  </div>
+
+                  {/* Description directly under title */}
+                  <p className={`text-sm leading-relaxed ${THEME_COMBINATIONS.textMuted}`}>
+                    {selectedBook.description}
+                  </p>
+
+                  {/* Rating */}
+                  {selectedBook.rating !== undefined && (
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => {
+                        const rating = selectedBook.rating!;
+                        const isFull = star <= rating;
+                        const isHalf = star === Math.ceil(rating) && rating % 1 !== 0;
+
+                        return (
+                          <div key={star} className="relative h-5 w-5">
+                            <svg
+                              className="absolute inset-0 h-5 w-5 text-light-border dark:text-dark-border"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            {(isFull || isHalf) && (
+                              <svg
+                                className="absolute inset-0 h-5 w-5 text-[#FACC15]"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                style={isHalf ? { clipPath: 'inset(0 50% 0 0)' } : undefined}
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Review box */}
+              <div className="flex flex-col gap-4 rounded-xl border border-light-border/50 bg-light-bg/40 p-6 backdrop-blur-sm dark:border-dark-border/50 dark:bg-dark-bg/40">
+                <p className={`text-sm italic ${THEME_COMBINATIONS.textSubtle}`}>
+                  {selectedBook.review ?? "thoughts coming soon"}
                 </p>
               </div>
-              <p className={`max-w-3xl text-base leading-relaxed ${THEME_COMBINATIONS.textMuted}`}>
-                {selectedBook.description}
-              </p>
             </div>
-            <div className="flex h-72 flex-1 flex-col gap-6 rounded-xl border border-light-border/50 bg-light-bg/40 p-8 backdrop-blur-sm dark:border-dark-border/50 dark:bg-dark-bg/40">
-              {selectedBook.rating !== undefined && (
-                <div className="flex gap-1.5">
-                  {[1, 2, 3, 4, 5].map((star) => {
-                    const rating = selectedBook.rating!;
-                    const isFull = star <= rating;
-                    const isHalf = star === Math.ceil(rating) && rating % 1 !== 0;
-                    const isEmpty = star > Math.ceil(rating);
 
-                    return (
-                      <div key={star} className="relative h-8 w-8">
-                        {/* Background empty star */}
-                        <svg
-                          className="absolute inset-0 h-8 w-8 text-light-border dark:text-dark-border"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        {/* Foreground filled star (full or half) */}
-                        {(isFull || isHalf) && (
+            {/* Desktop Layout: Original layout */}
+            <div className="hidden md:flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-12">
+              <HeroBook book={selectedBook} />
+              <div className="flex flex-1 flex-col gap-5">
+                <div>
+                  <h1 className={`text-3xl font-serif leading-tight lg:text-[38px] ${THEME_COMBINATIONS.text}`}>
+                    {selectedBook.title}
+                  </h1>
+                  <p className={`mt-3 text-sm uppercase tracking-[0.25em] ${THEME_COMBINATIONS.textSubtle}`}>
+                    {selectedBook.author} · {selectedBook.year}
+                  </p>
+                </div>
+                <p className={`max-w-3xl text-base leading-relaxed ${THEME_COMBINATIONS.textMuted}`}>
+                  {selectedBook.description}
+                </p>
+              </div>
+              <div className="flex h-72 flex-1 flex-col gap-6 rounded-xl border border-light-border/50 bg-light-bg/40 p-8 backdrop-blur-sm dark:border-dark-border/50 dark:bg-dark-bg/40">
+                {selectedBook.rating !== undefined && (
+                  <div className="flex gap-1.5">
+                    {[1, 2, 3, 4, 5].map((star) => {
+                      const rating = selectedBook.rating!;
+                      const isFull = star <= rating;
+                      const isHalf = star === Math.ceil(rating) && rating % 1 !== 0;
+
+                      return (
+                        <div key={star} className="relative h-8 w-8">
                           <svg
-                            className="absolute inset-0 h-8 w-8 text-[#FACC15] dark:text-[#FACC15]"
+                            className="absolute inset-0 h-8 w-8 text-light-border dark:text-dark-border"
                             fill="currentColor"
                             viewBox="0 0 20 20"
-                            style={isHalf ? { clipPath: 'inset(0 50% 0 0)' } : undefined}
                           >
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                           </svg>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-              <p className={`text-base italic ${THEME_COMBINATIONS.textSubtle}`}>
-                {selectedBook.review ?? "thoughts coming soon"}
-              </p>
+                          {(isFull || isHalf) && (
+                            <svg
+                              className="absolute inset-0 h-8 w-8 text-[#FACC15] dark:text-[#FACC15]"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              style={isHalf ? { clipPath: 'inset(0 50% 0 0)' } : undefined}
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                <p className={`text-base italic ${THEME_COMBINATIONS.textSubtle}`}>
+                  {selectedBook.review ?? "thoughts coming soon"}
+                </p>
+              </div>
             </div>
           </div>
         ) : (
@@ -109,9 +188,79 @@ const Library = () => {
         )}
       </section>
 
-      <section className="mt-auto flex flex-col gap-8 pb-12 px-12">
+      <section className="mt-auto flex flex-col gap-8 pb-12 px-6 md:px-12">
         <div className="relative">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
+          {/* Mobile Layout */}
+          <div className="flex flex-col gap-6 md:hidden">
+            {/* Currently Reading - Mobile */}
+            {currentBook && (
+              <div className="flex flex-col gap-3">
+                <span className={`text-xs uppercase tracking-[0.45em] ${THEME_COMBINATIONS.textSubtle}`}>
+                  Currently Reading
+                </span>
+                <div className="flex justify-center">
+                  <div className="w-32">
+                    <button
+                      type="button"
+                      onClick={() => handleBookSelect(currentBook.id)}
+                      aria-pressed={selectedBook?.id === currentBook.id}
+                      className={`relative flex w-full overflow-hidden rounded-lg transition-transform aspect-[2/3] ${
+                        selectedBook?.id === currentBook.id
+                          ? "-translate-y-1"
+                          : "hover:-translate-y-1"
+                      }`}
+                    >
+                      <BookArt book={currentBook} />
+                      <span className="sr-only">{currentBook.title} by {currentBook.author}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Previously Read - Mobile: 3-4 columns, scrollable */}
+            <div className="flex flex-col gap-3">
+              <span className={`text-xs uppercase tracking-[0.45em] ${THEME_COMBINATIONS.textSubtle}`}>
+                Previously Read
+              </span>
+              <div className="relative">
+                <div className="custom-scrollbar max-h-[40vh] overflow-y-auto pb-4">
+                  {completedBooks.length > 0 ? (
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                      {completedBooks.map((book) => {
+                        const isSelected = selectedBook?.id === book.id;
+
+                        return (
+                          <button
+                            key={book.id}
+                            type="button"
+                            onClick={() => handleBookSelect(book.id)}
+                            aria-pressed={isSelected}
+                            className={`relative flex w-full overflow-hidden rounded-lg transition-transform aspect-[2/3] ${
+                              isSelected
+                                ? "-translate-y-1"
+                                : "hover:-translate-y-1"
+                            }`}
+                          >
+                            <BookArt book={book} />
+                            <span className="sr-only">{book.title} by {book.author}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className={`flex h-32 w-full items-center justify-center border border-dashed ${THEME_COMBINATIONS.border} text-xs ${THEME_COMBINATIONS.textSubtle}`}>
+                      Add previously read books to fill this shelf.
+                    </div>
+                  )}
+                </div>
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-light-bg to-transparent dark:from-dark-bg" />
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout - Original */}
+          <div className="hidden md:flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
             {currentBook ? (
               <div className="flex w-[11rem] shrink-0 flex-col items-start gap-3">
                 <span className={`whitespace-nowrap text-xs uppercase tracking-[0.45em] ${THEME_COMBINATIONS.textSubtle}`}>
@@ -240,9 +389,10 @@ const BookArt = ({ book }: BookArtProps) => {
 
 type HeroBookProps = {
   book: LibraryBook;
+  isMobile?: boolean;
 };
 
-const HeroBook = ({ book }: HeroBookProps) => {
+const HeroBook = ({ book, isMobile = false }: HeroBookProps) => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isCoverBroken, setIsCoverBroken] = useState(false);
   const coverSrc = getCoverSource(book.coverImage);
@@ -251,7 +401,53 @@ const HeroBook = ({ book }: HeroBookProps) => {
     setIsCoverBroken(false);
   }, [coverSrc]);
 
+  // Accelerometer-based rotation for mobile
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      const beta = event.beta || 0;  // front-back tilt (-180 to 180)
+      const gamma = event.gamma || 0; // left-right tilt (-90 to 90)
+
+      // Convert device orientation to book rotation
+      // gamma controls Y rotation (left-right tilt)
+      // beta controls X rotation (front-back tilt)
+      const maxTilt = 20;
+
+      // Normalize gamma (-90 to 90) to rotation (-maxTilt to maxTilt)
+      const nextY = (gamma / 90) * maxTilt;
+
+      // Normalize beta, accounting for typical reading angle (around 45 degrees)
+      // When phone is flat (beta = 0), book should be slightly tilted
+      // When phone is vertical (beta = 90), book should be more tilted
+      const adjustedBeta = beta - 45; // Adjust for typical holding angle
+      const nextX = -(adjustedBeta / 45) * maxTilt;
+
+      setRotation({ x: nextX, y: nextY });
+    };
+
+    // Request permission for iOS 13+ devices
+    if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+      (DeviceOrientationEvent as any).requestPermission()
+        .then((permissionState: string) => {
+          if (permissionState === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation);
+          }
+        })
+        .catch(console.error);
+    } else {
+      // Non-iOS devices
+      window.addEventListener('deviceorientation', handleOrientation);
+    }
+
+    return () => {
+      window.removeEventListener('deviceorientation', handleOrientation);
+    };
+  }, [isMobile]);
+
   const handleMouseMove = useCallback((event: MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return; // Disable mouse interaction on mobile
+
     const rect = event.currentTarget.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
@@ -263,11 +459,12 @@ const HeroBook = ({ book }: HeroBookProps) => {
     const nextX = -((y - centerY) / centerY) * maxTilt;
 
     setRotation({ x: nextX, y: nextY });
-  }, []);
+  }, [isMobile]);
 
   const handleMouseLeave = useCallback(() => {
+    if (isMobile) return; // Disable mouse interaction on mobile
     setRotation({ x: 0, y: 0 });
-  }, []);
+  }, [isMobile]);
 
   const hasCover = Boolean(coverSrc) && !isCoverBroken;
   const imageScale = book.coverScale ?? 1;
@@ -279,15 +476,16 @@ const HeroBook = ({ book }: HeroBookProps) => {
     background: `linear-gradient(135deg, ${book.coverColor}, ${lightenHex(book.coverColor, 30)})`,
   };
 
-  const perspective = 780;
-  const bookWidth = 192; // matches Tailwind w-48
-  const bookHeight = 288; // matches Tailwind h-72
-  const spineThickness = 26;
+  // Mobile: smaller dimensions
+  const perspective = isMobile ? 520 : 780;
+  const bookWidth = isMobile ? 128 : 192; // w-32 for mobile, w-48 for desktop
+  const bookHeight = isMobile ? 192 : 288; // h-48 for mobile, h-72 for desktop
+  const spineThickness = isMobile ? 18 : 26;
   const pageColor = "#f5f1e6";
 
   return (
     <div
-      className="relative h-72 w-48"
+      className={isMobile ? "relative h-48 w-32" : "relative h-72 w-48"}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >

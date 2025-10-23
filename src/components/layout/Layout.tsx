@@ -80,8 +80,10 @@ const Layout = () => {
   return (
     <SidebarProvider>
       <div className={`relative h-screen w-full overflow-hidden ${THEME_COMBINATIONS.background}`}>
-        <Sidebar />
-        <div className="h-full flex flex-col pl-16">
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
+        <div className="h-full flex flex-col md:pl-16">
           <Header />
           <div className="flex flex-1 overflow-hidden">
             <Outlet />

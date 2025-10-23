@@ -440,7 +440,7 @@ const Rocket = () => {
   return (
     <div
       ref={containerRef}
-      className="rocket-container fixed bottom-0 right-8 z-50"
+      className="rocket-container fixed bottom-0 right-8 z-50 hidden md:block"
       style={{ width: '200px', height: '500px', pointerEvents: 'none' }}
     >
       {/* Launch Tower - separate fixed SVG */}

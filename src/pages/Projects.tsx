@@ -1,5 +1,7 @@
 
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 import ProjectCard from "@/components/cards/ProjectCard";
 import type { ProjectEntry } from "@/data/samples";
@@ -7,6 +9,7 @@ import { projectEntries } from "@/data/samples";
 import { THEME_COMBINATIONS } from "@/constants/theme";
 
 const Projects = () => {
+  const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState<ProjectEntry | null>(
     projectEntries[0] ?? null
   );
@@ -42,10 +45,18 @@ const Projects = () => {
   return (
     <div className={`flex h-full flex-1 overflow-hidden ${THEME_COMBINATIONS.background}`}>
       {/* Left Panel - Project Navigation */}
-      <div className="flex w-[45%] flex-col border-r border-light-border/10 dark:border-dark-border/50">
+      <div className="flex w-full md:w-[45%] flex-col border-r border-light-border/10 dark:border-dark-border/50">
         {/* Header */}
-        <div className={`border-b border-light-border/10 px-8 py-10 dark:border-dark-border/50`}>
-          <h1 className={`mb-1 font-serif text-5xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>
+        <div className={`border-b border-light-border/10 px-6 md:px-8 py-10 dark:border-dark-border/50`}>
+          {/* Mobile back button */}
+          <button
+            onClick={() => navigate('/me')}
+            className="flex items-center gap-2 text-sm text-light-text-muted hover:text-light-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors md:hidden mb-4"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Back to home</span>
+          </button>
+          <h1 className={`mb-1 font-serif text-4xl md:text-5xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>
             Projects
           </h1>
           <p className={`font-serif text-sm ${THEME_COMBINATIONS.textSubtle}`}>

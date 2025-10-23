@@ -21,6 +21,8 @@ const PhysicsProfileIcon = () => {
   const [isPhysicsMode, setIsPhysicsMode] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isNearSnapZone, setIsNearSnapZone] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [usesAccelerometer, setUsesAccelerometer] = useState(false);
   const [physics, setPhysics] = useState<PhysicsState>({
     x: 0,
     y: 0,
@@ -64,12 +66,76 @@ const PhysicsProfileIcon = () => {
   const SNAP_DISTANCE = 80; // Distance threshold for snapping back into place
   const PHYSICS_DELAY = 300; // ms to wait before gravity kicks in
 
+  // Detect if device is mobile and supports accelerometer
+  useEffect(() => {
+    const checkMobile = () => {
+      const isMobileDevice = window.innerWidth < 768;
+      setIsMobile(isMobileDevice);
+
+      // Check if device orientation is supported
+      if (isMobileDevice && typeof DeviceOrientationEvent !== 'undefined') {
+        setUsesAccelerometer(true);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
   // Initialize audio context
   useEffect(() => {
     if (typeof window !== "undefined" && !audioContextRef.current) {
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
     }
   }, []);
+
+  // Accelerometer-based physics for mobile devices
+  useEffect(() => {
+    if (!usesAccelerometer || !isPhysicsMode) return;
+
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      // DeviceOrientationEvent provides:
+      // - beta: front-to-back tilt in degrees (-180 to 180)
+      // - gamma: left-to-right tilt in degrees (-90 to 90)
+
+      const beta = event.beta || 0;  // front-back tilt
+      const gamma = event.gamma || 0; // left-right tilt
+
+      // Convert tilt to gravity-like forces
+      // Normalize to a reasonable range for physics simulation
+      const gravityX = (gamma / 90) * 1.5; // Max 1.5 when fully tilted
+      const gravityY = (beta / 90) * 1.5;  // Max 1.5 when fully tilted
+
+      // Apply these as continuous forces to the physics simulation
+      setPhysics((prev) => ({
+        ...prev,
+        vx: prev.vx + gravityX * 0.5,
+        vy: prev.vy + gravityY * 0.5,
+      }));
+    };
+
+    // Request permission for iOS 13+ devices
+    if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+      (DeviceOrientationEvent as any).requestPermission()
+        .then((permissionState: string) => {
+          if (permissionState === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation);
+          }
+        })
+        .catch(console.error);
+    } else {
+      // Non-iOS devices
+      window.addEventListener('deviceorientation', handleOrientation);
+    }
+
+    return () => {
+      window.removeEventListener('deviceorientation', handleOrientation);
+    };
+  }, [usesAccelerometer, isPhysicsMode]);
 
   // Synchronously update physics position when entering physics mode to prevent jump
   useLayoutEffect(() => {
@@ -348,8 +414,10 @@ const PhysicsProfileIcon = () => {
           const radius = ICON_SIZE / 2;
           let onGroundThisFrame = false;
 
-          // Apply gravity immediately for natural fall
-          vy += GRAVITY;
+          // Apply gravity immediately for natural fall (but not when using accelerometer)
+          if (!usesAccelerometer) {
+            vy += GRAVITY;
+          }
 
           // Apply air resistance (minimal)
           vx *= AIR_FRICTION;
@@ -403,38 +471,40 @@ const PhysicsProfileIcon = () => {
             }
           }
 
-          // Collision with page elements using pixel-perfect detection
-          const collision = checkPixelCollision(x, y, radius);
-          if (collision) {
-            const rect = collision.element.getBoundingClientRect();
+          // Collision with page elements - skip on mobile with accelerometer
+          if (!usesAccelerometer) {
+            const collision = checkPixelCollision(x, y, radius);
+            if (collision) {
+              const rect = collision.element.getBoundingClientRect();
 
-            if (collision.side === "left") {
-              x = rect.left - radius - 1;
-              const impactVelocity = Math.abs(vx);
-              vx = -Math.abs(vx) * BOUNCE_DAMPING;
-              playCollisionSound(impactVelocity);
-            } else if (collision.side === "right") {
-              x = rect.right + radius + 1;
-              const impactVelocity = Math.abs(vx);
-              vx = Math.abs(vx) * BOUNCE_DAMPING;
-              playCollisionSound(impactVelocity);
-            } else if (collision.side === "top") {
-              y = rect.top - radius - 1;
-              const impactVelocity = Math.abs(vy);
-              vy = -Math.abs(vy) * BOUNCE_DAMPING;
-              onGroundThisFrame = true;
-
-              if (Math.abs(impactVelocity) > ROLLING_THRESHOLD) {
+              if (collision.side === "left") {
+                x = rect.left - radius - 1;
+                const impactVelocity = Math.abs(vx);
+                vx = -Math.abs(vx) * BOUNCE_DAMPING;
                 playCollisionSound(impactVelocity);
-              } else {
-                // Stick to surface and start rolling
-                vy = 0;
+              } else if (collision.side === "right") {
+                x = rect.right + radius + 1;
+                const impactVelocity = Math.abs(vx);
+                vx = Math.abs(vx) * BOUNCE_DAMPING;
+                playCollisionSound(impactVelocity);
+              } else if (collision.side === "top") {
+                y = rect.top - radius - 1;
+                const impactVelocity = Math.abs(vy);
+                vy = -Math.abs(vy) * BOUNCE_DAMPING;
+                onGroundThisFrame = true;
+
+                if (Math.abs(impactVelocity) > ROLLING_THRESHOLD) {
+                  playCollisionSound(impactVelocity);
+                } else {
+                  // Stick to surface and start rolling
+                  vy = 0;
+                }
+              } else if (collision.side === "bottom") {
+                y = rect.bottom + radius + 1;
+                const impactVelocity = Math.abs(vy);
+                vy = Math.abs(vy) * BOUNCE_DAMPING;
+                playCollisionSound(impactVelocity);
               }
-            } else if (collision.side === "bottom") {
-              y = rect.bottom + radius + 1;
-              const impactVelocity = Math.abs(vy);
-              vy = Math.abs(vy) * BOUNCE_DAMPING;
-              playCollisionSound(impactVelocity);
             }
           }
 
@@ -478,8 +548,22 @@ const PhysicsProfileIcon = () => {
     };
   }, [isPhysicsMode, isDragging]);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isPhysicsMode) return;
+
+    // On mobile with accelerometer, request permission first
+    if (usesAccelerometer && typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+      try {
+        const permissionState = await (DeviceOrientationEvent as any).requestPermission();
+        if (permissionState !== 'granted') {
+          console.log('Device orientation permission denied');
+          return;
+        }
+      } catch (error) {
+        console.error('Error requesting device orientation permission:', error);
+        return;
+      }
+    }
 
     // Capture the original position for snap-back
     if (normalIconRef.current) {
@@ -512,6 +596,8 @@ const PhysicsProfileIcon = () => {
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!isPhysicsMode) return;
+    // Don't allow dragging on mobile with accelerometer
+    if (usesAccelerometer) return;
 
     e.preventDefault();
     setIsDragging(true);
@@ -528,6 +614,8 @@ const PhysicsProfileIcon = () => {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!isPhysicsMode) return;
+    // Don't allow dragging on mobile with accelerometer
+    if (usesAccelerometer) return;
 
     e.preventDefault();
     setIsDragging(true);
@@ -687,7 +775,7 @@ const PhysicsProfileIcon = () => {
       {isPhysicsMode && (
         <div
           ref={physicsIconRef}
-          className="fixed z-[101] cursor-grab active:cursor-grabbing"
+          className={`fixed z-[101] ${usesAccelerometer ? 'cursor-default' : 'cursor-grab active:cursor-grabbing'}`}
           style={{
             left: physics.x - ICON_SIZE / 2,
             top: physics.y - ICON_SIZE / 2,
