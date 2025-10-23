@@ -218,13 +218,13 @@ const Library = () => {
               </div>
             )}
 
-            {/* Previously Read - Mobile: 3-4 columns, scrollable */}
-            <div className="flex flex-col gap-3">
+            {/* Previously Read - Mobile: 3-4 columns, scrollable to screen edge */}
+            <div className="flex flex-col gap-3 -mb-12 pb-12">
               <span className={`text-xs uppercase tracking-[0.45em] ${THEME_COMBINATIONS.textSubtle}`}>
                 Previously Read
               </span>
-              <div className="relative">
-                <div className="custom-scrollbar max-h-[40vh] overflow-y-auto pb-4">
+              <div className="relative -mx-6 px-6">
+                <div className="custom-scrollbar overflow-y-auto pb-[100vh]">
                   {completedBooks.length > 0 ? (
                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                       {completedBooks.map((book) => {

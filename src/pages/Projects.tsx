@@ -44,13 +44,20 @@ const Projects = () => {
     setActiveImageIndex((prev) => (prev - 1 + imageCount) % imageCount);
   };
 
-  // Swipe handlers for mobile
+  // Swipe handlers for mobile with page scroll prevention
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = e.targetTouches[0].clientX;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchEndX.current = e.targetTouches[0].clientX;
+
+    // Prevent page scroll when swiping horizontally on carousel
+    const diff = Math.abs(touchStartX.current - touchEndX.current);
+    if (diff > 10) {
+      e.preventDefault();
+    }
   };
 
   const handleTouchEnd = () => {
@@ -298,16 +305,28 @@ const Projects = () => {
                     {project.previewImages.length > 0 && (
                       <div className="relative">
                         <div
-                          className="rounded-lg overflow-hidden bg-light-border dark:bg-dark-bg-elevated touch-pan-x"
+                          className="rounded-lg overflow-hidden bg-light-border dark:bg-dark-bg-elevated"
                           onTouchStart={handleTouchStart}
                           onTouchMove={handleTouchMove}
                           onTouchEnd={handleTouchEnd}
                         >
-                          <img
-                            src={project.previewImages[activeImageIndex]}
-                            alt={`${project.title} preview ${activeImageIndex + 1}`}
-                            className="w-full h-auto object-contain"
-                          />
+                          {/* Sliding container with all images */}
+                          <div
+                            className="flex transition-transform duration-300 ease-out"
+                            style={{
+                              transform: `translateX(-${activeImageIndex * 100}%)`,
+                              touchAction: 'pan-y pinch-zoom',
+                            }}
+                          >
+                            {project.previewImages.map((imageSrc, index) => (
+                              <img
+                                key={index}
+                                src={imageSrc}
+                                alt={`${project.title} preview ${index + 1}`}
+                                className="w-full h-auto object-contain flex-shrink-0"
+                              />
+                            ))}
+                          </div>
                         </div>
 
                         {/* Image navigation dots only (no arrows) */}
