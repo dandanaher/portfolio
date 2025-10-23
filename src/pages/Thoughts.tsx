@@ -8,11 +8,11 @@ import { THEME_COMBINATIONS } from "@/constants/theme";
 const Thoughts = () => {
   return (
     <div className={`flex flex-1 flex-col overflow-hidden ${THEME_COMBINATIONS.background}`}>
-      <MobileNav showBackButton={true} />
-      <div className="flex flex-1 overflow-hidden px-6 pb-10 pt-10">
+      <MobileNav showBackButton={true} title="Thoughts" />
+      <div className="flex flex-1 overflow-hidden px-6 pb-10 pt-10 md:pt-10">
         <ScrollColumn className="flex-1">
-          <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
-            <h1 className={`text-center text-sm font-serif ${THEME_COMBINATIONS.textSubtle}`}>
+          <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 pt-12 md:pt-0">
+            <h1 className={`text-center text-sm font-serif ${THEME_COMBINATIONS.textSubtle} hidden md:block`}>
               collection of my thoughts
             </h1>
             {[...blogEntries].reverse().map((entry) => (

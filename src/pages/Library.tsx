@@ -39,15 +39,15 @@ const Library = () => {
   };
 
   return (
-    <div className={`flex flex-1 flex-col gap-12 overflow-y-auto ${THEME_COMBINATIONS.background} ${THEME_COMBINATIONS.text}`}>
-      <MobileNav showBackButton={true} />
-      <header className={`flex flex-col gap-3 border-b ${THEME_COMBINATIONS.border} px-6 md:px-12 py-10`}>
-        <h1 className={`mb-1 font-serif text-4xl md:text-5xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>Library</h1>
+    <div className={`flex flex-1 flex-col overflow-y-auto ${THEME_COMBINATIONS.background} ${THEME_COMBINATIONS.text}`}>
+      <MobileNav showBackButton={true} title="Library" />
+      <header className={`flex-col gap-3 border-b ${THEME_COMBINATIONS.border} px-6 md:px-12 py-6 md:py-10 pt-16 md:pt-10 hidden md:flex`}>
+        <h1 className={`mb-1 font-serif text-5xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>Library</h1>
         <p className={`font-serif text-sm ${THEME_COMBINATIONS.textSubtle}`}>
           A record of some of the books I've read and am currently reading.
         </p>
       </header>
-      <section className="flex flex-col gap-6 px-6 md:px-12">
+      <section className="flex flex-col gap-4 md:gap-6 px-6 md:px-12 pt-16 md:pt-0">
         {selectedBook ? (
           <div className="flex flex-col gap-6">
             {/* Mobile Layout: Book on left, title and description on right */}
@@ -185,11 +185,11 @@ const Library = () => {
           <div className="flex flex-col gap-6 md:hidden">
             {/* Currently Reading - Mobile */}
             {currentBook && (
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 <span className={`text-xs uppercase tracking-[0.45em] ${THEME_COMBINATIONS.textSubtle}`}>
                   Currently Reading
                 </span>
-                <div className="flex justify-center">
+                <div className="flex justify-start">
                   <div className="w-32">
                     <button
                       type="button"

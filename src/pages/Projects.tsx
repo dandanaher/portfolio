@@ -236,19 +236,10 @@ const Projects = () => {
 
       {/* Mobile: Single column layout with expandable cards */}
       <div className="md:hidden flex flex-col h-full overflow-y-auto">
-        <MobileNav showBackButton={true} />
-        {/* Header */}
-        <div className={`border-b border-light-border/10 px-6 py-10 dark:border-dark-border/50`}>
-          <h1 className={`mb-1 font-serif text-4xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>
-            Projects
-          </h1>
-          <p className={`font-serif text-sm ${THEME_COMBINATIONS.textSubtle}`}>
-            {projectEntries.length} {projectEntries.length === 1 ? 'piece' : 'pieces'} of work
-          </p>
-        </div>
+        <MobileNav showBackButton={true} title="Projects" />
 
         {/* Projects list with inline details */}
-        <div className="flex-1 px-6 py-6">
+        <div className="flex-1 px-6 py-6 pt-20">
           <div className="space-y-6">
             {projectEntries.map((project, index) => (
               <div key={project.title} className="flex flex-col gap-4">

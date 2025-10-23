@@ -29,19 +29,33 @@ const BlogCard = ({
   }, []);
 
   useEffect(() => {
-    // Separate overflow logic for mobile and desktop
-    if (contentRef.current) {
-      if (isMobile) {
-        // Mobile: Check if content exceeds one line
-        const lineHeight = 24;
-        const isOverflowing = contentRef.current.scrollHeight > lineHeight * 1.5;
-        setIsMobileOverflowing(isOverflowing);
-      } else {
-        // Desktop: Check if content exceeds max-h-32 (128px)
-        const isOverflowing = contentRef.current.scrollHeight > 128;
-        setIsDesktopOverflowing(isOverflowing);
+    // Add a small delay to ensure content is rendered
+    const timer = setTimeout(() => {
+      if (contentRef.current) {
+        if (isMobile) {
+          // Mobile: Check if content exceeds one line
+          const lineHeight = 24;
+          const isOverflowing = contentRef.current.scrollHeight > lineHeight * 1.5;
+          console.log('Mobile overflow check:', {
+            scrollHeight: contentRef.current.scrollHeight,
+            threshold: lineHeight * 1.5,
+            isOverflowing
+          });
+          setIsMobileOverflowing(isOverflowing);
+        } else {
+          // Desktop: Check if content exceeds max-h-32 (128px)
+          const isOverflowing = contentRef.current.scrollHeight > 128;
+          console.log('Desktop overflow check:', {
+            scrollHeight: contentRef.current.scrollHeight,
+            threshold: 128,
+            isOverflowing
+          });
+          setIsDesktopOverflowing(isOverflowing);
+        }
       }
-    }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [text, isMobile]);
 
   const isOverflowing = isMobile ? isMobileOverflowing : isDesktopOverflowing;
