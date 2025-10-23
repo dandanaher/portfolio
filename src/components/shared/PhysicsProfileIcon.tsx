@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import faviconUrl from "@/assets/branding/favicon.png";
-import profileFaceUrl from "@/assets/images/Face.png";
+import profileFaceUrl from "@/assets/images/face.jpg";
 
 interface PhysicsState {
   x: number;

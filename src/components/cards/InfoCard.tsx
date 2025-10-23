@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import faviconUrl from "@/assets/branding/favicon.png";
-import profileFaceUrl from "@/assets/images/Face.png";
+import profileFaceUrl from "@/assets/images/face.jpg";
 import { profileDetails } from "@/data/samples";
 import { Github, Mail } from "lucide-react";
 
