@@ -1,7 +1,6 @@
 
 import { useEffect, useMemo, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import MobileNav from "@/components/layout/MobileNav";
 
 import ProjectCard from "@/components/cards/ProjectCard";
 import type { ProjectEntry } from "@/data/samples";
@@ -9,7 +8,6 @@ import { projectEntries } from "@/data/samples";
 import { THEME_COMBINATIONS } from "@/constants/theme";
 
 const Projects = () => {
-  const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState<ProjectEntry | null>(
     projectEntries[0] ?? null
   );
@@ -238,15 +236,9 @@ const Projects = () => {
 
       {/* Mobile: Single column layout with expandable cards */}
       <div className="md:hidden flex flex-col h-full overflow-y-auto">
+        <MobileNav showBackButton={true} />
         {/* Header */}
         <div className={`border-b border-light-border/10 px-6 py-10 dark:border-dark-border/50`}>
-          <button
-            onClick={() => navigate('/me')}
-            className="flex items-center gap-2 text-sm text-light-text-muted hover:text-light-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors mb-4"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Back to home</span>
-          </button>
           <h1 className={`mb-1 font-serif text-4xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>
             Projects
           </h1>

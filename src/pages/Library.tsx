@@ -1,14 +1,12 @@
 import type { CSSProperties, MouseEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import MobileNav from "@/components/layout/MobileNav";
 
 import type { LibraryBook } from "@/data/library";
 import { libraryBooks } from "@/data/library";
 import { THEME_COMBINATIONS } from "@/constants/theme";
 
 const Library = () => {
-  const navigate = useNavigate();
   const currentBook = useMemo(
     () => libraryBooks.find((book) => book.status === "current") ?? null,
     []
@@ -42,15 +40,8 @@ const Library = () => {
 
   return (
     <div className={`flex flex-1 flex-col gap-12 overflow-y-auto ${THEME_COMBINATIONS.background} ${THEME_COMBINATIONS.text}`}>
+      <MobileNav showBackButton={true} />
       <header className={`flex flex-col gap-3 border-b ${THEME_COMBINATIONS.border} px-6 md:px-12 py-10`}>
-        {/* Mobile back button */}
-        <button
-          onClick={() => navigate('/me')}
-          className="flex items-center gap-2 text-sm text-light-text-muted hover:text-light-text dark:text-dark-text-muted dark:hover:text-dark-text transition-colors md:hidden mb-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span>Back to home</span>
-        </button>
         <h1 className={`mb-1 font-serif text-4xl md:text-5xl tracking-tight ${THEME_COMBINATIONS.textDark}`}>Library</h1>
         <p className={`font-serif text-sm ${THEME_COMBINATIONS.textSubtle}`}>
           A record of some of the books I've read and am currently reading.
@@ -219,12 +210,12 @@ const Library = () => {
             )}
 
             {/* Previously Read - Mobile: 3-4 columns, scrollable to screen edge */}
-            <div className="flex flex-col gap-3 -mb-12 pb-12">
+            <div className="flex flex-col gap-3">
               <span className={`text-xs uppercase tracking-[0.45em] ${THEME_COMBINATIONS.textSubtle}`}>
                 Previously Read
               </span>
               <div className="relative -mx-6 px-6">
-                <div className="custom-scrollbar overflow-y-auto pb-[100vh]">
+                <div className="custom-scrollbar overflow-y-auto pb-4">
                   {completedBooks.length > 0 ? (
                     <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                       {completedBooks.map((book) => {

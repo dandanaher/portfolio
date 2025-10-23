@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Rocket from "@/components/shared/Rocket";
 import PhysicsProfileIcon from "@/components/shared/PhysicsProfileIcon";
+import MobileNav from "@/components/layout/MobileNav";
 import { Github, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +26,7 @@ const navItems: NavItem[] = [
 const Me = () => {
   return (
     <div className="relative flex min-h-screen items-center justify-center p-6 pt-20 pb-24 md:p-12 md:pb-32 md:pl-60">
+      <MobileNav showBackButton={false} />
       <Rocket />
       <div className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
         {/* Left side - Intro */}
