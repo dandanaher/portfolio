@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
 
 const Me = () => {
   return (
-    <div className="relative flex min-h-screen items-center justify-center p-6 pb-24 md:p-12 md:pb-32 md:pl-60">
+    <div className="relative flex min-h-screen items-center justify-center p-6 pt-20 pb-24 md:p-12 md:pb-32 md:pl-60">
       <Rocket />
       <div className="grid w-full max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
         {/* Left side - Intro */}

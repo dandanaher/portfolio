@@ -254,7 +254,6 @@ const Library = () => {
                     </div>
                   )}
                 </div>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-light-bg to-transparent dark:from-dark-bg" />
               </div>
             </div>
           </div>
@@ -401,49 +400,7 @@ const HeroBook = ({ book, isMobile = false }: HeroBookProps) => {
     setIsCoverBroken(false);
   }, [coverSrc]);
 
-  // Accelerometer-based rotation for mobile
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const handleOrientation = (event: DeviceOrientationEvent) => {
-      const beta = event.beta || 0;  // front-back tilt (-180 to 180)
-      const gamma = event.gamma || 0; // left-right tilt (-90 to 90)
-
-      // Convert device orientation to book rotation
-      // Much more sensitive - smaller phone movements = bigger rotation
-      const maxTilt = 30; // Increased from 20
-      const sensitivity = 3; // Multiplier for more responsiveness
-
-      // Normalize gamma (-90 to 90) to rotation with high sensitivity
-      // Clamp to maxTilt to prevent over-rotation
-      const nextY = Math.max(-maxTilt, Math.min(maxTilt, (gamma / 30) * maxTilt * sensitivity));
-
-      // Normalize beta with high sensitivity
-      // Adjust for typical holding angle (around 45 degrees)
-      const adjustedBeta = beta - 45;
-      const nextX = Math.max(-maxTilt, Math.min(maxTilt, -(adjustedBeta / 15) * maxTilt * sensitivity));
-
-      setRotation({ x: nextX, y: nextY });
-    };
-
-    // Request permission for iOS 13+ devices
-    if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
-      (DeviceOrientationEvent as any).requestPermission()
-        .then((permissionState: string) => {
-          if (permissionState === 'granted') {
-            window.addEventListener('deviceorientation', handleOrientation);
-          }
-        })
-        .catch(console.error);
-    } else {
-      // Non-iOS devices
-      window.addEventListener('deviceorientation', handleOrientation);
-    }
-
-    return () => {
-      window.removeEventListener('deviceorientation', handleOrientation);
-    };
-  }, [isMobile]);
+  // Removed accelerometer-based rotation for mobile - keeping mouse interaction only
 
   const handleMouseMove = useCallback((event: MouseEvent<HTMLDivElement>) => {
     if (isMobile) return; // Disable mouse interaction on mobile

@@ -1,5 +1,5 @@
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
@@ -14,6 +14,8 @@ const Projects = () => {
     projectEntries[0] ?? null
   );
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   useEffect(() => {
     setActiveImageIndex(0);
@@ -40,6 +42,32 @@ const Projects = () => {
   const handlePrevious = () => {
     if (!showNavigation) return;
     setActiveImageIndex((prev) => (prev - 1 + imageCount) % imageCount);
+  };
+
+  // Swipe handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!selectedProject || selectedProject.previewImages.length <= 1) return;
+
+    const swipeThreshold = 50; // Minimum distance for swipe
+    const diff = touchStartX.current - touchEndX.current;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swiped left - next image
+        handleNext();
+      } else {
+        // Swiped right - previous image
+        handlePrevious();
+      }
+    }
   };
 
   return (
@@ -269,7 +297,12 @@ const Projects = () => {
                     {/* Images */}
                     {project.previewImages.length > 0 && (
                       <div className="relative">
-                        <div className="rounded-lg overflow-hidden bg-light-border dark:bg-dark-bg-elevated">
+                        <div
+                          className="rounded-lg overflow-hidden bg-light-border dark:bg-dark-bg-elevated touch-pan-x"
+                          onTouchStart={handleTouchStart}
+                          onTouchMove={handleTouchMove}
+                          onTouchEnd={handleTouchEnd}
+                        >
                           <img
                             src={project.previewImages[activeImageIndex]}
                             alt={`${project.title} preview ${activeImageIndex + 1}`}
@@ -277,37 +310,21 @@ const Projects = () => {
                           />
                         </div>
 
-                        {/* Image navigation */}
+                        {/* Image navigation dots only (no arrows) */}
                         {project.previewImages.length > 1 && (
                           <div className="flex items-center justify-center gap-2 mt-3">
-                            <button
-                              type="button"
-                              onClick={handlePrevious}
-                              className="flex h-8 w-8 items-center justify-center rounded-full bg-light-bg/90 text-lg text-light-text-dark dark:bg-dark-text/90 dark:text-dark-bg"
-                            >
-                              ‹
-                            </button>
-                            <div className="flex gap-2">
-                              {project.previewImages.map((_, index) => (
-                                <button
-                                  key={index}
-                                  onClick={() => setActiveImageIndex(index)}
-                                  className={`h-2 w-2 rounded-full transition-all ${
-                                    index === activeImageIndex
-                                      ? "w-6 bg-light-text-dark dark:bg-dark-text"
-                                      : "bg-light-text-muted/50 dark:bg-dark-text-muted/50"
-                                  }`}
-                                  aria-label={`View image ${index + 1}`}
-                                />
-                              ))}
-                            </div>
-                            <button
-                              type="button"
-                              onClick={handleNext}
-                              className="flex h-8 w-8 items-center justify-center rounded-full bg-light-bg/90 text-lg text-light-text-dark dark:bg-dark-text/90 dark:text-dark-bg"
-                            >
-                              ›
-                            </button>
+                            {project.previewImages.map((_, index) => (
+                              <button
+                                key={index}
+                                onClick={() => setActiveImageIndex(index)}
+                                className={`h-2 w-2 rounded-full transition-all ${
+                                  index === activeImageIndex
+                                    ? "w-6 bg-light-text-dark dark:bg-dark-text"
+                                    : "bg-light-text-muted/50 dark:bg-dark-text-muted/50"
+                                }`}
+                                aria-label={`View image ${index + 1}`}
+                              />
+                            ))}
                           </div>
                         )}
                       </div>

@@ -105,16 +105,17 @@ const PhysicsProfileIcon = () => {
       const beta = event.beta || 0;  // front-back tilt
       const gamma = event.gamma || 0; // left-right tilt
 
-      // Convert tilt to gravity-like forces
-      // Normalize to a reasonable range for physics simulation
-      const gravityX = (gamma / 90) * 1.5; // Max 1.5 when fully tilted
-      const gravityY = (beta / 90) * 1.5;  // Max 1.5 when fully tilted
+      // Convert tilt to gravity-like forces with MUCH higher sensitivity
+      // Increased from 1.5 to 4.0 for faster movement
+      const gravityX = (gamma / 90) * 4.0; // Max 4.0 when fully tilted
+      const gravityY = (beta / 90) * 4.0;  // Max 4.0 when fully tilted
 
-      // Apply these as continuous forces to the physics simulation
+      // Apply these as continuous forces with increased multiplier
+      // Increased from 0.5 to 1.5 for more responsiveness
       setPhysics((prev) => ({
         ...prev,
-        vx: prev.vx + gravityX * 0.5,
-        vy: prev.vy + gravityY * 0.5,
+        vx: prev.vx + gravityX * 1.5,
+        vy: prev.vy + gravityY * 1.5,
       }));
     };
 
